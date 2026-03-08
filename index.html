@@ -3,164 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World Cup 2026 | Interactive Dashboard</title>
+    <title>🏆 FIFA World Cup 2026 | Interactive Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --bg-primary: #000000; --bg-card: #1a1a1a; --bg-card-hover: #252525; --border: #2a2a2a; --border-hover: #3a3a3a; --text-primary: #ffffff; --text-secondary: #a1a1a1; --text-tertiary: #6b6b6b; --accent: #3b82f6; --accent-glow: rgba(59, 130, 246, 0.15); --gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; }
-        .app { max-width: 1400px; margin: 0 auto; padding: 20px; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--border); margin-bottom: 30px; }
-        .logo { display: flex; align-items: center; gap: 12px; }
-        .logo-icon { width: 48px; height: 48px; background: var(--gradient); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; }
-        .logo-text { font-size: 1.5rem; font-weight: 700; }
-        .logo-text span { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 30px; }
-        .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s; }
-        .stat-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-        .stat-card.featured { background: var(--gradient); border: none; }
-        .stat-value { font-size: 2rem; font-weight: 800; }
-        .stat-card.featured .stat-value, .stat-card.featured .stat-label { color: white; }
-        .stat-label { color: var(--text-secondary); font-size: 0.8rem; margin-top: 4px; }
-        .countdown-section { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; padding: 30px; text-align: center; margin-bottom: 30px; }
-        .countdown-title { color: var(--text-secondary); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; }
+        :root {
+            --bg: #0a0a0f;
+            --bg-secondary: #12121a;
+            --card: #1a1a24;
+            --card-hover: #24242e;
+            --border: #2a2a38;
+            --text: #ffffff;
+            --text-muted: #8b8b9e;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.3);
+            --group-a: #ef4444;
+            --group-b: #f59e0b;
+            --group-c: #22c55e;
+            --group-d: #3b82f6;
+            --group-e: #a855f7;
+            --group-f: #ec4899;
+            --group-g: #14b8a6;
+            --group-h: #f97316;
+            --knockout: #ef4444;
+            --final: #fbbf24;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 100%);
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%);
+        }
+        .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+        .trophy { font-size: 4rem; margin-bottom: 10px; }
+        .hero h1 { font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px; }
+        .hero-subtitle { color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px; }
+        
+        /* Stats Grid */
+        .stats { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 40px; }
+        .stat-box { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px 30px; min-width: 120px; }
+        .stat-box.featured { background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; }
+        .stat-num { font-size: 2.5rem; font-weight: 800; }
+        .stat-box.featured .stat-num { color: white; }
+        .stat-label { color: var(--text-muted); font-size: 0.85rem; margin-top: 5px; }
+        .stat-box.featured .stat-label { color: rgba(255,255,255,0.8); }
+        
+        /* Countdown */
         .countdown { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .countdown-item { background: #111; border-radius: 12px; padding: 15px 25px; min-width: 80px; }
-        .countdown-value { font-size: 2.5rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
-        .countdown-label { color: var(--text-tertiary); font-size: 0.7rem; text-transform: uppercase; margin-top: 5px; }
-        .nav { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; }
-        .nav-btn { padding: 12px 24px; background: transparent; border: 1px solid var(--border); border-radius: 12px; color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; cursor: pointer; white-space: nowrap; transition: all 0.2s; }
-        .nav-btn:hover { background: var(--bg-card); color: var(--text-primary); }
-        .nav-btn.active { background: var(--bg-card); border-color: var(--accent); color: var(--text-primary); }
-        .search-bar { position: relative; margin-bottom: 20px; }
-        .search-bar input { width: 100%; padding: 14px 20px 14px 48px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; color: var(--text-primary); font-size: 1rem; outline: none; }
-        .search-bar input:focus { border-color: var(--accent); }
-        .search-bar svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--text-tertiary); }
+        .countdown-item { background: var(--bg-secondary); border-radius: 12px; padding: 20px 25px; min-width: 90px; }
+        .countdown-num { font-size: 2.5rem; font-weight: 800; font-family: 'Inter', sans-serif; color: var(--accent); }
+        .countdown-label { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+        
+        /* Navigation */
+        .nav { display: flex; gap: 10px; justify-content: center; padding: 30px 20px; flex-wrap: wrap; }
+        .nav-btn { padding: 14px 28px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; color: var(--text-muted); font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .nav-btn:hover { background: var(--card-hover); color: var(--text); }
+        .nav-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+        
+        /* Search */
+        .search { max-width: 600px; margin: 0 auto 30px; padding: 0 20px; }
+        .search input { width: 100%; padding: 16px 24px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; color: var(--text); font-size: 1rem; outline: none; }
+        .search input:focus { border-color: var(--accent); }
+        
+        /* Main Content */
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px 60px; }
         .section { display: none; }
         .section.active { display: block; }
-        .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; }
-        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-        .clickable-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; cursor: pointer; transition: all 0.3s; position: relative; }
-        .clickable-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .card-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; background: var(--accent-glow); color: #60a5fa; }
-        .card-badge.knockout { background: rgba(239,68,68,0.2); color: #fca5a5; }
-        .card-badge.final { background: rgba(251,191,36,0.2); color: #fde047; }
-        .card-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
-        .card-subtitle { color: var(--text-secondary); font-size: 0.9rem; }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1000; overflow-y: auto; }
-        .modal-overlay.active { display: block; }
-        .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; max-width: 800px; margin: 50px auto; padding: 30px; max-height: 90vh; overflow-y: auto; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
-        .modal-title { font-size: 1.5rem; font-weight: 700; }
-        .modal-close { background: none; border: none; color: var(--text-secondary); font-size: 2rem; cursor: pointer; line-height: 1; }
-        .modal-matches { display: flex; flex-direction: column; gap: 12px; }
-        .modal-match { background: var(--bg-primary); border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .modal-match-team { font-weight: 600; }
-        .modal-match-vs { color: var(--text-tertiary); }
-        .modal-match-info { text-align: right; color: var(--text-secondary); font-size: 0.85rem; }
-        .modal-teams-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-        .modal-team { background: var(--bg-primary); border-radius: 12px; padding: 16px; }
-        .modal-team-name { font-weight: 600; margin-bottom: 8px; }
-        .modal-team-matches { font-size: 0.85rem; color: var(--text-secondary); }
-        @media (max-width: 768px) { .hero { grid-template-columns: repeat(2, 1fr); } .countdown-item { padding: 12px 15px; min-width: 60px; } .countdown-value { font-size: 1.8rem; } }
+        
+        .section-header { font-size: 1.8rem; font-weight: 700; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
+        
+        /* Cards Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+        
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        
+        .card-badge { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; }
+        .card-badge.group { background: rgba(99,102,241,0.2); color: #818cf8; }
+        .card-badge.knockout { background: rgba(239,68,68,0.2); color: #f87171; }
+        .card-badge.final { background: rgba(251,191,36,0.2); color: #fbbf24; }
+        
+        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+        .card-subtitle { color: var(--text-muted); font-size: 0.95rem; }
+        .card-date { color: var(--text-muted); font-size: 0.85rem; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+        
+        /* Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 1000; overflow-y: auto; }
+        .modal.open { display: block; }
+        .modal-content { background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 24px; max-width: 700px; margin: 50px auto; padding: 40px; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .modal-title { font-size: 1.8rem; font-weight: 800; }
+        .modal-close { background: none; border: none; color: var(--text-muted); font-size: 2.5rem; cursor: pointer; line-height: 1; }
+        
+        .modal-list { display: flex; flex-direction: column; gap: 12px; }
+        .modal-item { background: var(--card); border-radius: 12px; padding: 18px; display: flex; justify-content: space-between; align-items: center; }
+        .modal-teams { display: flex; align-items: center; gap: 15px; flex: 1; }
+        .modal-team { font-weight: 600; }
+        .modal-vs { color: var(--text-muted); font-size: 0.9rem; }
+        .modal-info { text-align: right; color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; }
+        
+        .modal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+        .modal-grid-item { background: var(--card); border-radius: 12px; padding: 16px; }
+        .modal-grid-name { font-weight: 600; margin-bottom: 5px; }
+        .modal-grid-info { color: var(--text-muted); font-size: 0.85rem; }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .stats { gap: 10px; }
+            .stat-box { min-width: 100px; padding: 15px 20px; }
+            .nav { gap: 8px; }
+            .nav-btn { padding: 12px 20px; font-size: 0.9rem; }
+        }
     </style>
 </head>
 <body>
-    <div class="app">
-        <header class="header"><div class="logo"><div class="logo-icon">⚽</div><div class="logo-text">World Cup <span>2026</span></div></header>
-        <div class="hero">
-            <div class="stat-card featured"><div class="stat-value" id="countdown-days">--</div><div class="stat-label">Days Left</div></div>
-            <div class="stat-card"><div class="stat-value">48</div><div class="stat-label">Group Matches</div></div>
-            <div class="stat-card"><div class="stat-value">32</div><div class="stat-label">Knockout</div></div>
-            <div class="stat-card"><div class="stat-value">16</div><div class="stat-label">Stadiums</div></div>
-            <div class="stat-card"><div class="stat-value">48</div><div class="stat-label">Teams</div></div>
+    <div class="hero">
+        <div class="hero-content">
+            <div class="trophy">🏆</div>
+            <h1>FIFA World Cup 2026</h1>
+            <p class="hero-subtitle">June 11 - July 19 | USA • Canada • Mexico</p>
+            
+            <div class="stats">
+                <div class="stat-box featured"><div class="stat-num" id="days-left">--</div><div class="stat-label">Days Until Kickoff</div></div>
+                <div class="stat-box"><div class="stat-num">48</div><div class="stat-label">Group Matches</div></div>
+                <div class="stat-box"><div class="stat-num">32</div><div class="stat-label">Knockout</div></div>
+                <div class="stat-box"><div class="stat-num">16</div><div class="stat-label">Stadiums</div></div>
+                <div class="stat-box"><div class="stat-num">48</div><div class="stat-label">Teams</div></div>
+            </div>
+            
+            <div class="countdown">
+                <div class="countdown-item"><div class="countdown-num" id="days">--</div><div class="countdown-label">Days</div></div>
+                <div class="countdown-item"><div class="countdown-num" id="hours">--</div><div class="countdown-label">Hours</div></div>
+                <div class="countdown-item"><div class="countdown-num" id="mins">--</div><div class="countdown-label">Mins</div></div>
+                <div class="countdown-item"><div class="countdown-num" id="secs">--</div><div class="countdown-label">Secs</div></div>
+            </div>
         </div>
-        <div class="countdown-section">
-            <div class="countdown-title">🏆 Tournament Starts In</div>
-            <div class="countdown"><div class="countdown-item"><div class="countdown-value" id="days">--</div><div class="countdown-label">Days</div></div><div class="countdown-item"><div class="countdown-value" id="hours">--</div><div class="countdown-label">Hours</div></div><div class="countdown-item"><div class="countdown-value" id="minutes">--</div><div class="countdown-label">Mins</div></div><div class="countdown-item"><div class="countdown-value" id="seconds">--</div><div class="countdown-label">Secs</div></div></div>
-        </div>
-        <nav class="nav">
-            <button class="nav-btn active" data-section="matches">📅 Matches</button>
-            <button class="nav-btn" data-section="teams">👥 Teams</button>
-            <button class="nav-btn" data-section="groups">🔢 Groups</button>
-            <button class="nav-btn" data-section="venues">📍 Venues</button>
-        </nav>
-        <div class="search-bar">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="search" placeholder="Search..." onkeyup="filter()">
-        </div>
-        <section id="matches" class="section active"><h2 class="section-title">📅 All Matches - Click for Details</h2><div class="cards-grid" id="matches-grid"></div></section>
-        <section id="teams" class="section"><h2 class="section-title">👥 Teams - Click for Schedule</h2><div class="cards-grid" id="teams-grid"></div></section>
-        <section id="groups" class="section"><h2 class="section-title">🔢 Groups - Click for Details</h2><div class="cards-grid" id="groups-grid"></div></section>
-        <section id="venues" class="section"><h2 class="section-title">📍 Venues - Click for All Matches</h2><div class="cards-grid" id="venues-grid"></div></section>
     </div>
-    <div class="modal-overlay" id="modal"><div class="modal"><div class="modal-header"><div class="modal-title" id="modal-title">Details</div><button class="modal-close" onclick="closeModal()">×</button></div><div id="modal-content"></div></div></div>
+    
+    <nav class="nav">
+        <button class="nav-btn active" data-tab="matches">📅 Matches</button>
+        <button class="nav-btn" data-tab="teams">👥 Teams</button>
+        <button class="nav-btn" data-tab="groups">🔢 Groups</button>
+        <button class="nav-btn" data-tab="venues">📍 Venues</button>
+    </nav>
+    
+    <div class="search">
+        <input type="text" id="search" placeholder="🔍 Search matches, teams, venues..." oninput="filter()">
+    </div>
+    
+    <div class="container">
+        <!-- MATCHES -->
+        <section id="matches" class="section active">
+            <h2 class="section-header">📅 All Matches</h2>
+            <div class="grid" id="matches-grid"></div>
+        </section>
+        
+        <!-- TEAMS -->
+        <section id="teams" class="section">
+            <h2 class="section-header">👥 All Teams</h2>
+            <div class="grid" id="teams-grid"></div>
+        </section>
+        
+        <!-- GROUPS -->
+        <section id="groups" class="section">
+            <h2 class="section-header">🔢 Tournament Groups</h2>
+            <div class="grid" id="groups-grid"></div>
+        </section>
+        
+        <!-- VENUES -->
+        <section id="venues" class="section">
+            <h2 class="section-header">📍 All Venues</h2>
+            <div class="grid" id="venues-grid"></div>
+        </section>
+    </div>
+    
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modal-title"></div>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+    
     <script>
+        // DATA
         const matches = [
-            { id: 1, date: 'June 11', time: '2:00 PM CT', team1: 'Mexico', team2: 'South Africa', venue: 'Estadio Azteca', stage: 'group', group: 'A', stageName: 'Group A' },
-            { id: 2, date: 'June 11', time: '9:00 PM CT', team1: 'South Korea', team2: 'UEFA Playoff D', venue: 'Estadio Akron', stage: 'group', group: 'A', stageName: 'Group A' },
-            { id: 3, date: 'June 12', time: '2:00 PM CT', team1: 'Canada', team2: 'UEFA Playoff A', venue: 'Toronto Stadium', stage: 'group', group: 'B', stageName: 'Group B' },
-            { id: 4, date: 'June 12', time: '9:00 PM CT', team1: 'USA', team2: 'Paraguay', venue: 'SoFi Stadium', stage: 'group', group: 'D', stageName: 'Group D' },
-            { id: 5, date: 'June 13', time: '2:00 PM CT', team1: 'Qatar', team2: 'Switzerland', venue: 'Santa Clara Stadium', stage: 'group', group: 'B', stageName: 'Group B' },
-            { id: 6, date: 'June 13', time: '5:00 PM CT', team1: 'Brazil', team2: 'Morocco', venue: 'MetLife Stadium', stage: 'group', group: 'C', stageName: 'Group C' },
-            { id: 7, date: 'June 13', time: '8:00 PM CT', team1: 'Haiti', team2: 'Scotland', venue: 'Boston Stadium', stage: 'group', group: 'C', stageName: 'Group C' },
-            { id: 8, date: 'June 14', time: '12:00 PM CT', team1: 'Germany', team2: 'Curacao', venue: 'Houston Stadium', stage: 'group', group: 'E', stageName: 'Group E' },
-            { id: 9, date: 'June 14', time: '3:00 PM CT', team1: 'Netherlands', team2: 'Japan', venue: 'AT&T Stadium', stage: 'group', group: 'F', stageName: 'Group F' },
-            { id: 10, date: 'June 14', time: '6:00 PM CT', team1: 'Ivory Coast', team2: 'Ecuador', venue: 'Philadelphia Stadium', stage: 'group', group: 'E', stageName: 'Group E' },
-            { id: 11, date: 'June 15', time: '11:00 AM CT', team1: 'Spain', team2: 'Cape Verde', venue: 'Atlanta Stadium', stage: 'group', group: 'H', stageName: 'Group H' },
-            { id: 12, date: 'June 15', time: '2:00 PM CT', team1: 'Belgium', team2: 'Egypt', venue: 'Seattle Stadium', stage: 'group', group: 'G', stageName: 'Group G' },
-            { id: 13, date: 'June 15', time: '5:00 PM CT', team1: 'Saudi Arabia', team2: 'Uruguay', venue: 'Miami Stadium', stage: 'group', group: 'H', stageName: 'Group H' },
-            { id: 14, date: 'June 16', time: '2:00 PM CT', team1: 'France', team2: 'Senegal', venue: 'MetLife Stadium', stage: 'group', group: 'I', stageName: 'Group I' },
-            { id: 15, date: 'June 16', time: '8:00 PM CT', team1: 'Argentina', team2: 'Algeria', venue: 'Arrowhead Stadium', stage: 'group', group: 'J', stageName: 'Group J' },
-            { id: 16, date: 'June 17', time: '12:00 PM CT', team1: 'Portugal', team2: 'Inter-P1', venue: 'Houston Stadium', stage: 'group', group: 'K', stageName: 'Group K' },
-            { id: 17, date: 'June 17', time: '3:00 PM CT', team1: 'England', team2: 'Croatia', venue: 'AT&T Stadium', stage: 'group', group: 'L', stageName: 'Group L' },
-            { id: 18, date: 'June 17', time: '6:00 PM CT', team1: 'Ghana', team2: 'Panama', venue: 'Toronto Stadium', stage: 'group', group: 'L', stageName: 'Group L' },
-            { id: 19, date: 'June 18', time: '11:00 AM CT', team1: 'UEFA Playoff D', team2: 'South Africa', venue: 'Atlanta Stadium', stage: 'group', group: 'A', stageName: 'Group A' },
-            { id: 20, date: 'June 18', time: '1:00 AM CT', team1: 'Mexico', team2: 'South Korea', venue: 'Estadio Akron', stage: 'group', group: 'A', stageName: 'Group A' },
-            { id: 21, date: 'June 18', time: '2:00 PM CT', team1: 'Switzerland', team2: 'UEFA Playoff A', venue: 'Santa Clara Stadium', stage: 'group', group: 'B', stageName: 'Group B' },
-            { id: 22, date: 'June 18', time: '5:00 PM CT', team1: 'Canada', team2: 'Qatar', venue: 'Toronto Stadium', stage: 'group', group: 'B', stageName: 'Group B' },
-            { id: 23, date: 'June 18', time: '8:00 PM CT', team1: 'Scotland', team2: 'Morocco', venue: 'Boston Stadium', stage: 'group', group: 'C', stageName: 'Group C' },
-            { id: 24, date: 'June 19', time: '7:00 PM CT', team1: 'USA', team2: 'Australia', venue: 'Seattle Stadium', stage: 'group', group: 'D', stageName: 'Group D' },
-            { id: 25, date: 'June 19', time: '11:00 PM CT', team1: 'UEFA Playoff C', team2: 'Paraguay', venue: 'Santa Clara Stadium', stage: 'group', group: 'D', stageName: 'Group D' },
-            { id: 26, date: 'June 20', time: '12:00 PM CT', team1: 'Germany', team2: 'Ivory Coast', venue: 'Houston Stadium', stage: 'group', group: 'E', stageName: 'Group E' },
-            { id: 27, date: 'June 20', time: '12:00 PM CT', team1: 'Netherlands', team2: 'UEFA Playoff B', venue: 'Houston Stadium', stage: 'group', group: 'F', stageName: 'Group F' },
-            { id: 28, date: 'June 20', time: '5:00 PM CT', team1: 'Ecuador', team2: 'Curacao', venue: 'Philadelphia Stadium', stage: 'group', group: 'E', stageName: 'Group E' },
-            { id: 29, date: 'June 21', time: '11:00 AM CT', team1: 'Spain', team2: 'Saudi Arabia', venue: 'Atlanta Stadium', stage: 'group', group: 'H', stageName: 'Group H' },
-            { id: 30, date: 'June 21', time: '12:00 PM CT', team1: 'Belgium', team2: 'Iran', venue: 'SoFi Stadium', stage: 'group', group: 'G', stageName: 'Group G' },
-            { id: 31, date: 'June 21', time: '3:00 PM CT', team1: 'New Zealand', team2: 'Egypt', venue: 'BC Place', stage: 'group', group: 'G', stageName: 'Group G' },
-            { id: 32, date: 'June 21', time: '8:00 PM CT', team1: 'Uruguay', team2: 'Cape Verde', venue: 'Miami Stadium', stage: 'group', group: 'H', stageName: 'Group H' },
-            { id: 33, date: 'June 22', time: '12:00 PM CT', team1: 'France', team2: 'Inter-P2', venue: 'Philadelphia Stadium', stage: 'group', group: 'I', stageName: 'Group I' },
-            { id: 34, date: 'June 22', time: '3:00 PM CT', team1: 'Norway', team2: 'Senegal', venue: 'MetLife Stadium', stage: 'group', group: 'I', stageName: 'Group I' },
-            { id: 35, date: 'June 22', time: '5:00 PM CT', team1: 'Argentina', team2: 'Austria', venue: 'AT&T Stadium', stage: 'group', group: 'J', stageName: 'Group J' },
-            { id: 36, date: 'June 23', time: '12:00 PM CT', team1: 'Portugal', team2: 'Uzbekistan', venue: 'Houston Stadium', stage: 'group', group: 'K', stageName: 'Group K' },
-            { id: 37, date: 'June 23', time: '3:00 PM CT', team1: 'England', team2: 'Ghana', venue: 'Boston Stadium', stage: 'group', group: 'L', stageName: 'Group L' },
-            { id: 38, date: 'June 23', time: '6:00 PM CT', team1: 'Panama', team2: 'Croatia', venue: 'Toronto Stadium', stage: 'group', group: 'L', stageName: 'Group L' },
-            { id: 39, date: 'June 24', time: '3:00 PM CT', team1: 'Switzerland', team2: 'Canada', venue: 'Toronto Stadium', stage: 'group', group: 'B', stageName: 'Group B' },
-            { id: 40, date: 'June 24', time: '3:00 PM CT', team1: 'UEFA Playoff D', team2: 'Mexico', venue: 'Estadio Azteca', stage: 'group', group: 'A', stageName: 'Group A' },
-            { id: 41, date: 'June 24', time: '4:00 PM CT', team1: 'Scotland', team2: 'Brazil', venue: 'Miami Stadium', stage: 'group', group: 'C', stageName: 'Group C' },
-            { id: 42, date: 'June 25', time: '3:00 PM CT', team1: 'Ecuador', team2: 'Germany', venue: 'MetLife Stadium', stage: 'group', group: 'E', stageName: 'Group E' },
-            { id: 43, date: 'June 25', time: '3:00 PM CT', team1: 'UEFA Playoff C', team2: 'USA', venue: 'SoFi Stadium', stage: 'group', group: 'D', stageName: 'Group D' },
-            { id: 44, date: 'June 26', time: '2:00 PM CT', team1: 'Norway', team2: 'France', venue: 'Boston Stadium', stage: 'group', group: 'I', stageName: 'Group I' },
-            { id: 45, date: 'June 26', time: '3:00 PM CT', team1: 'New Zealand', team2: 'Belgium', venue: 'BC Place', stage: 'group', group: 'G', stageName: 'Group G' },
-            { id: 46, date: 'June 27', time: '3:00 PM CT', team1: 'Jordan', team2: 'Argentina', venue: 'AT&T Stadium', stage: 'group', group: 'J', stageName: 'Group J' },
-            { id: 47, date: 'June 27', time: '6:00 PM CT', team1: 'Panama', team2: 'England', venue: 'MetLife Stadium', stage: 'group', group: 'L', stageName: 'Group L' },
-            { id: 48, date: 'June 28', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'SoFi Stadium', stage: 'knockout', stageName: 'Round of 32' },
-            { id: 49, date: 'June 29', time: '12:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Houston Stadium', stage: 'knockout', stageName: 'Round of 32' },
-            { id: 50, date: 'June 30', time: '12:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'AT&T Stadium', stage: 'knockout', stageName: 'Round of 32' },
-            { id: 51, date: 'July 1', time: '12:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Atlanta Stadium', stage: 'knockout', stageName: 'Round of 32' },
-            { id: 52, date: 'July 4', time: '12:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Houston Stadium', stage: 'knockout', stageName: 'Round of 16' },
-            { id: 53, date: 'July 5', time: '3:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'MetLife Stadium', stage: 'knockout', stageName: 'Round of 16' },
-            { id: 54, date: 'July 6', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'AT&T Stadium', stage: 'knockout', stageName: 'Round of 16' },
-            { id: 55, date: 'July 7', time: '11:00 AM CT', team1: 'TBD', team2: 'TBD', venue: 'Atlanta Stadium', stage: 'knockout', stageName: 'Round of 16' },
-            { id: 56, date: 'July 9', time: '3:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Boston Stadium', stage: 'knockout', stageName: 'Quarterfinal' },
-            { id: 57, date: 'July 10', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'SoFi Stadium', stage: 'knockout', stageName: 'Quarterfinal' },
-            { id: 58, date: 'July 11', time: '4:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Miami Stadium', stage: 'knockout', stageName: 'Quarterfinal' },
-            { id: 59, date: 'July 14', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'AT&T Stadium', stage: 'knockout', stageName: 'Semifinal' },
-            { id: 60, date: 'July 15', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Atlanta Stadium', stage: 'knockout', stageName: 'Semifinal' },
-            { id: 61, date: 'July 18', time: '4:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Miami Stadium', stage: 'knockout', stageName: 'Third Place' },
-            { id: 62, date: 'July 19', time: '2:00 PM CT', team1: '🏆 FINAL', team2: 'Championship', venue: 'MetLife Stadium', stage: 'final', stageName: '🏆 FINAL' }
+            { date: 'June 11', time: '2:00 PM CT', t1: 'Mexico', t2: 'South Africa', venue: 'Estadio Azteca', stage: 'group', group: 'A' },
+            { date: 'June 11', time: '9:00 PM CT', t1: 'South Korea', t2: 'UEFA Playoff D', venue: 'Estadio Akron', stage: 'group', group: 'A' },
+            { date: 'June 12', time: '2:00 PM CT', t1: 'Canada', t2: 'UEFA Playoff A', venue: 'Toronto Stadium', stage: 'group', group: 'B' },
+            { date: 'June 12', time: '9:00 PM CT', t1: 'USA', t2: 'Paraguay', venue: 'SoFi Stadium', stage: 'group', group: 'D' },
+            { date: 'June 13', time: '2:00 PM CT', t1: 'Qatar', t2: 'Switzerland', venue: 'Santa Clara', stage: 'group', group: 'B' },
+            { date: 'June 13', time: '5:00 PM CT', t1: 'Brazil', t2: 'Morocco', venue: 'MetLife Stadium', stage: 'group', group: 'C' },
+            { date: 'June 13', time: '8:00 PM CT', t1: 'Haiti', t2: 'Scotland', venue: 'Boston Stadium', stage: 'group', group: 'C' },
+            { date: 'June 14', time: '12:00 PM CT', t1: 'Germany', t2: 'Curacao', venue: 'Houston Stadium', stage: 'group', group: 'E' },
+            { date: 'June 14', time: '3:00 PM CT', t1: 'Netherlands', t2: 'Japan', venue: 'AT&T Stadium', stage: 'group', group: 'F' },
+            { date: 'June 14', time: '6:00 PM CT', t1: 'Ivory Coast', t2: 'Ecuador', venue: 'Philadelphia', stage: 'group', group: 'E' },
+            { date: 'June 15', time: '11:00 AM CT', t1: 'Spain', t2: 'Cape Verde', venue: 'Atlanta Stadium', stage: 'group', group: 'H' },
+            { date: 'June 15', time: '2:00 PM CT', t1: 'Belgium', t2: 'Egypt', venue: 'Seattle Stadium', stage: 'group', group: 'G' },
+            { date: 'June 15', time: '5:00 PM CT', t1: 'Saudi Arabia', t2: 'Uruguay', venue: 'Miami Stadium', stage: 'group', group: 'H' },
+            { date: 'June 16', time: '2:00 PM CT', t1: 'France', t2: 'Senegal', venue: 'MetLife Stadium', stage: 'group', group: 'I' },
+            { date: 'June 16', time: '8:00 PM CT', t1: 'Argentina', t2: 'Algeria', venue: 'Arrowhead Stadium', stage: 'group', group: 'J' },
+            { date: 'June 17', time: '12:00 PM CT', t1: 'Portugal', t2: 'Inter-P Playoff 1', venue: 'Houston Stadium', stage: 'group', group: 'K' },
+            { date: 'June 17', time: '3:00 PM CT', t1: 'England', t2: 'Croatia', venue: 'AT&T Stadium', stage: 'group', group: 'L' },
+            { date: 'June 19', time: '7:00 PM CT', t1: 'USA', t2: 'Australia', venue: 'Seattle Stadium', stage: 'group', group: 'D' },
+            { date: 'June 28', time: '2:00 PM CT', t1: 'TBD', t2: 'TBD', venue: 'SoFi Stadium', stage: 'knockout' },
+            { date: 'July 4', time: '12:00 PM CT', t1: 'TBD', t2: 'TBD', venue: 'Houston Stadium', stage: 'knockout' },
+            { date: 'July 9', time: '3:00 PM CT', t1: 'TBD', t2: 'TBD', venue: 'Boston Stadium', stage: 'knockout' },
+            { date: 'July 14', time: '2:00 PM CT', t1: 'TBD', t2: 'TBD', venue: 'AT&T Stadium', stage: 'knockout' },
+            { date: 'July 19', time: '2:00 PM CT', t1: '🏆 FINAL', t2: 'Champion', venue: 'MetLife Stadium', stage: 'final' }
         ];
         
         const teams = [
@@ -183,24 +258,184 @@
         ];
         
         const groups = [
-            { letter: 'A', teams: ['Mexico', 'South Korea', 'South Africa', 'UEFA Playoff D'] },
-            { letter: 'B', teams: ['Canada', 'Qatar', 'Switzerland', 'UEFA Playoff A'] },
+            { letter: 'A', teams: ['Mexico', 'South Korea', 'South Africa', 'Playoff D'] },
+            { letter: 'B', teams: ['Canada', 'Qatar', 'Switzerland', 'Playoff A'] },
             { letter: 'C', teams: ['Brazil', 'Haiti', 'Morocco', 'Scotland'] },
-            { letter: 'D', teams: ['USA', 'Australia', 'Paraguay', 'UEFA Playoff C'] },
+            { letter: 'D', teams: ['USA', 'Australia', 'Paraguay', 'Playoff C'] },
             { letter: 'E', teams: ['Germany', 'Ivory Coast', 'Ecuador', 'Curacao'] },
-            { letter: 'F', teams: ['Netherlands', 'Japan', 'Tunisia', 'UEFA Playoff B'] },
+            { letter: 'F', teams: ['Netherlands', 'Japan', 'Tunisia', 'Playoff B'] },
             { letter: 'G', teams: ['Iran', 'Belgium', 'Egypt', 'New Zealand'] },
             { letter: 'H', teams: ['Spain', 'Saudi Arabia', 'Uruguay', 'Cape Verde'] },
-            { letter: 'I', teams: ['France', 'Senegal', 'Norway', 'Inter-P Playoff 2'] },
+            { letter: 'I', teams: ['France', 'Senegal', 'Norway', 'Playoff 2'] },
             { letter: 'J', teams: ['Argentina', 'Austria', 'Jordan', 'Algeria'] },
-            { letter: 'K', teams: ['Portugal', 'Colombia', 'Uzbekistan', 'Inter-P Playoff 1'] },
+            { letter: 'K', teams: ['Portugal', 'Colombia', 'Uzbekistan', 'Playoff 1'] },
             { letter: 'L', teams: ['England', 'Croatia', 'Ghana', 'Panama'] }
         ];
         
         const venues = [
-            { name: 'SoFi Stadium', city: 'Los Angeles', country: '🇺🇸 USA', matches: 7 },
-            { name: 'MetLife Stadium', city: 'New York', country: '🇺🇸 USA', matches: 7 },
-            { name: 'AT&T Stadium', city: 'Dallas', country: '🇺🇸 USA', matches: 7 },
-            { name: 'Estadio Azteca', city: 'Mexico City', country: '🇲🇽 Mexico', matches: 5 },
-            { name: 'Houston Stadium', city: 'Houston', country: '🇺🇸 USA', matches: 6 },
-            { name: 'Atlanta Stadium', city: 'Atlanta', country: '🇺🇸 USA', matches
+            { name: 'SoFi Stadium', city: 'Los Angeles', country: '🇺🇸 USA', matches: ['Jun 12: USA vs Paraguay', 'Jun 28: Knockout', 'Jul 10: Quarterfinal'] },
+            { name: 'MetLife Stadium', city: 'New York', country: '🇺🇸 USA', matches: ['Jun 13: Brazil vs Morocco', 'Jun 16: France vs Senegal', 'Jul 19: FINAL'] },
+            { name: 'AT&T Stadium', city: 'Dallas', country: '🇺🇸 USA', matches: ['Jun 14: Netherlands vs Japan', 'Jun 17: England vs Croatia', 'Jul 14: Semifinal'] },
+            { name: 'Estadio Azteca', city: 'Mexico City', country: '🇲🇽 Mexico', matches: ['Jun 11: Mexico vs South Africa', 'Jun 24: Playoff D vs Mexico'] },
+            { name: 'Houston Stadium', city: 'Houston', country: '🇺🇸 USA', matches: ['Jun 14: Germany vs Curacao', 'Jun 17: Portugal vs Playoff 1', 'Jul 4: Round of 16'] },
+            { name: 'Atlanta Stadium', city: 'Atlanta', country: '🇺🇸 USA', matches: ['Jun 15: Spain vs Cape Verde', 'Jun 18: Playoff D vs South Africa', 'Jul 15: Semifinal'] },
+            { name: 'Santa Clara', city: 'San Francisco', country: '🇺🇸 USA', matches: ['Jun 13: Qatar vs Switzerland', 'Jun 18: Switzerland vs Playoff A'] },
+            { name: 'Boston Stadium', city: 'Boston', country: '🇺🇸 USA', matches: ['Jun 13: Haiti vs Scotland', 'Jun 18: Scotland vs Morocco', 'Jul 9: Quarterfinal'] },
+            { name: 'Seattle Stadium', city: 'Seattle', country: '🇺🇸 USA', matches: ['Jun 15: Belgium vs Egypt', 'Jun 19: USA vs Australia'] },
+            { name: 'Miami Stadium', city: 'Miami', country: '🇺🇸 USA', matches: ['Jun 15: Saudi Arabia vs Uruguay', 'Jun 21: Uruguay vs Cape Verde'] },
+            { name: 'BC Place', city: 'Vancouver', country: '🇨🇦 Canada', matches: ['Jun 13: Australia vs Playoff C', 'Jun 21: NZ vs Egypt'] },
+            { name: 'Toronto Stadium', city: 'Toronto', country: '🇨🇦 Canada', matches: ['Jun 12: Canada vs Playoff A', 'Jun 18: Canada vs Qatar'] },
+            { name: 'Arrowhead Stadium', city: 'Kansas City', country: '🇺🇸 USA', matches: ['Jun 16: Argentina vs Algeria'] },
+            { name: 'Philadelphia', city: 'Philadelphia', country: '🇺🇸 USA', matches: ['Jun 14: Ivory Coast vs Ecuador', 'Jun 22: France vs Playoff 2'] },
+            { name: 'Estadio Akron', city: 'Guadalajara', country: '🇲🇽 Mexico', matches: ['Jun 11: South Korea vs Playoff D', 'Jun 18: Mexico vs South Korea'] }
+        ];
+        
+        // RENDER
+        function render() {
+            const s = document.getElementById('search').value.toLowerCase();
+            
+            // Matches
+            document.getElementById('matches-grid').innerHTML = matches.filter(m => 
+                `${m.date} ${m.t1} ${m.t2} ${m.venue}`.toLowerCase().includes(s)
+            ).map(m => `
+                <div class="card" onclick="showMatch('${m.stage}', '${m.group || m.stage}')">
+                    <span class="card-badge ${m.stage}">${m.group ? 'Group ' + m.group : m.stage}</span>
+                    <div class="card-title">${m.t1} vs ${m.t2}</div>
+                    <div class="card-subtitle">📍 ${m.venue}</div>
+                    <div class="card-date">${m.date} • ${m.time}</div>
+                </div>
+            `).join('');
+            
+            // Teams
+            document.getElementById('teams-grid').innerHTML = teams.filter(t => 
+                `${t.name} Group ${t.group}`.toLowerCase().includes(s)
+            ).map(t => `
+                <div class="card" onclick="showTeam('${t.name}')">
+                    <span class="card-badge group">Group ${t.group}</span>
+                    <div class="card-title">${t.flag} ${t.name}</div>
+                    <div class="card-subtitle">${t.matches.length} matches</div>
+                </div>
+            `).join('');
+            
+            // Groups
+            document.getElementById('groups-grid').innerHTML = groups.filter(g => 
+                `${g.letter} ${g.teams.join(' ')}`.toLowerCase().includes(s)
+            ).map(g => `
+                <div class="card" onclick="showGroup('${g.letter}')">
+                    <span class="card-badge group">Group</span>
+                    <div class="card-title">Group ${g.letter}</div>
+                    <div class="card-subtitle">${g.teams.length} teams</div>
+                </div>
+            `).join('');
+            
+            // Venues
+            document.getElementById('venues-grid').innerHTML = venues.filter(v => 
+                `${v.name} ${v.city}`.toLowerCase().includes(s)
+            ).map(v => `
+                <div class="card" onclick="showVenue('${v.name}')">
+                    <span class="card-badge group">${v.matches.length} matches</span>
+                    <div class="card-title">${v.name}</div>
+                    <div class="card-subtitle">${v.city}, ${v.country}</div>
+                </div>
+            `).join('');
+        }
+        
+        // MODAL
+        function showMatch(stage, filter) {
+            const list = stage === 'group' ? matches.filter(m => m.group === filter) : 
+                        stage === 'knockout' ? matches.filter(m => m.stage === 'knockout') :
+                        stage === 'final' ? matches.filter(m => m.stage === 'final') : matches;
+            const title = stage === 'group' ? `Group ${filter} Matches` : 
+                         stage === 'knockout' ? 'Knockout Matches' : 'Final';
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-body').innerHTML = `
+                <div class="modal-list">
+                    ${list.map(m => `
+                        <div class="modal-item">
+                            <div class="modal-teams">
+                                <span class="modal-team">${m.t1}</span>
+                                <span class="modal-vs">vs</span>
+                                <span class="modal-team">${m.t2}</span>
+                            </div>
+                            <div class="modal-info">${m.date}<br>${m.time}<br>${m.venue}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            document.getElementById('modal').classList.add('open');
+        }
+        
+        function showTeam(teamName) {
+            const t = teams.find(x => x.name === teamName);
+            document.getElementById('modal-title').textContent = `${t.flag} ${t.name}`;
+            document.getElementById('modal-body').innerHTML = `
+                <div style="margin-bottom:20px;"><span class="card-badge group">Group ${t.group}</span></div>
+                <div class="modal-list">
+                    ${t.matches.map(m => `<div class="modal-item"><span>${m}</span></div>`).join('')}
+                </div>
+            `;
+            document.getElementById('modal').classList.add('open');
+        }
+        
+        function showGroup(letter) {
+            const g = groups.find(x => x.letter === letter);
+            document.getElementById('modal-title').textContent = `Group ${letter}`;
+            document.getElementById('modal-body').innerHTML = `
+                <div class="modal-grid">
+                    ${g.teams.map(t => `
+                        <div class="modal-grid-item">
+                            <div class="modal-grid-name">${t}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            document.getElementById('modal').classList.add('open');
+        }
+        
+        function showVenue(venueName) {
+            const v = venues.find(x => x.name === venueName);
+            document.getElementById('modal-title').textContent = v.name;
+            document.getElementById('modal-body').innerHTML = `
+                <div style="margin-bottom:20px;color:var(--text-muted)">${v.city}, ${v.country}</div>
+                <div class="modal-list">
+                    ${v.matches.map(m => `<div class="modal-item"><span>${m}</span></div>`).join('')}
+                </div>
+            `;
+            document.getElementById('modal').classList.add('open');
+        }
+        
+        function closeModal() { document.getElementById('modal').classList.remove('open'); }
+        document.getElementById('modal').addEventListener('click', e => { if(e.target.id === 'modal') closeModal(); });
+        
+        // TABS
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+        
+        function filter() { render(); }
+        
+        // COUNTDOWN
+        function updateCountdown() {
+            const start = new Date('2026-06-11T12:00:00-05:00');
+            const now = new Date();
+            const diff = start - now;
+            if (diff > 0) {
+                document.getElementById('days').textContent = Math.floor(diff/(1000*60*60*24));
+                document.getElementById('hours').textContent = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+                document.getElementById('mins').textContent = Math.floor((diff%(1000*60*60))/(1000*60));
+                document.getElementById('secs').textContent = Math.floor((diff%(1000*60))/1000);
+                document.getElementById('days-left').textContent = Math.floor(diff/(1000*60*60*24));
+            }
+        }
+        
+        render();
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
