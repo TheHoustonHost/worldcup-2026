@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA World Cup 2026 Schedule</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: white;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 30px;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .group-stage { background: rgba(77, 150, 255, 0.2); border: 1px solid #4d96ff; }
+        .group-dot { background: #4d96ff; }
+        .round32 { background: rgba(107, 203, 119, 0.2); border: 1px solid #6bcb77; }
+        .round32-dot { background: #6bcb77; }
+        .round16 { background: rgba(255, 217, 61, 0.2); border: 1px solid #ffd93d; }
+        .round16-dot { background: #ffd93d; }
+        .quarter { background: rgba(255, 107, 107, 0.2); border: 1px solid #ff6b6b; }
+        .quarter-dot { background: #ff6b6b; }
+        .semi { background: rgba(168, 85, 247, 0.2); border: 1px solid #a855f7; }
+        .semi-dot { background: #a855f7; }
+        .final { background: rgba(255, 215, 0, 0.3); border: 2px solid gold; }
+        .final-dot { background: gold; }
+        
+        .month {
+            margin-bottom: 40px;
+        }
+        .month h2 {
+            color: #fff;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        .day-header {
+            text-align: center;
+            padding: 10px;
+            color: #888;
+            font-weight: bold;
+        }
+        .day {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            min-height: 120px;
+            padding: 10px;
+        }
+        .day-number {
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        .today .day-number {
+            color: #4d96ff;
+        }
+        .match {
+            padding: 6px 8px;
+            margin-bottom: 6px;
+            border-radius: 6px;
+            font-size: 0.75em;
+            line-height: 1.3;
+        }
+        .match-group { background: rgba(77, 150, 255, 0.3); border-left: 3px solid #4d96ff; }
+        .match-round32 { background: rgba(107, 203, 119, 0.3); border-left: 3px solid #6bcb77; }
+        .match-round16 { background: rgba(255, 217, 61, 0.3); border-left: 3px solid #ffd93d; }
+        .match-quarter { background: rgba(255, 107, 107, 0.3); border-left: 3px solid #ff6b6b; }
+        .match-semi { background: rgba(168, 85, 247, 0.3); border-left: 3px solid #a855f7; }
+        .match-final { background: rgba(255, 215, 0, 0.4); border-left: 3px solid gold; }
+        .match-time {
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        .no-matches {
+            color: #555;
+            font-style: italic;
+            font-size: 0.8em;
+        }
+        @media (max-width: 1200px) {
+            .calendar-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .calendar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .day {
+                min-height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>🏆 FIFA World Cup 2026</h1>
+    <p class="subtitle">June 11 - July 19, 2026 | USA, Canada, Mexico</p>
+    
+    <div class="legend">
+        <div class="legend-item group-stage"><div class="legend-dot group-dot"></div>Group Stage</div>
+        <div class="legend-item round32"><div class="legend-dot round32-dot"></div>Round of 32</div>
+        <div class="legend-item round16"><div class="legend-dot round16-dot"></div>Round of 16</div>
+        <div class="legend-item quarter"><div class="legend-dot quarter-dot"></div>Quarterfinals</div>
+        <div class="legend-item semi"><div class="legend-dot semi-dot"></div>Semifinals</div>
+        <div class="legend-item final"><div class="legend-dot final-dot"></div>Final</div>
+    </div>
+
+    <div class="month">
+        <h2>June 2026</h2>
+        <div class="calendar-grid">
+            <div class="day-header">Sun</div>
+            <div class="day-header">Mon</div>
+            <div class="day-header">Tue</div>
+            <div class="day-header">Wed</div>
+            <div class="day-header">Thu</div>
+            <div class="day-header">Fri</div>
+            <div class="day-header">Sat</div>
+            
+            <div class="day"><div class="day-number">31</div></div>
+            <div class="day"><div class="day-number">1</div></div>
+            <div class="day"><div class="day-number">2</div></div>
+            <div class="day"><div class="day-number">3</div></div>
+            <div class="day"><div class="day-number">4</div></div>
+            <div class="day"><div class="day-number">5</div></div>
+            <div class="day"><div class="day-number">6</div></div>
+            
+            <div class="day"><div class="day-number">7</div></div>
+            <div class="day"><div class="day-number">8</div></div>
+            <div class="day"><div class="day-number">9</div></div>
+            <div class="day"><div class="day-number">10</div></div>
+            <div class="day">
+                <div class="day-number">11</div>
+                <div class="match match-group"><span class="match-time">2pm</span><br>Mexico vs South Africa</div>
+                <div class="match match-group"><span class="match-time">9pm</span><br>South Korea vs UEFA Playoff D</div>
+            </div>
+            <div class="day">
+                <div class="day-number">12</div>
+                <div class="match match-group"><span class="match-time">2pm</span><br>Canada vs UEFA Playoff A</div>
+                <div class="match match-group"><span class="match-time">9pm</span><br>USA vs Paraguay</div>
+                <div class="match match-group"><span class="match-time">11pm</span><br>Australia vs UEFA Playoff C</div>
+            </div>
+            <div class="day">
+                <div class="day-number">13</div>
+                <div class="match match-group"><span class="match-time">2pm</span><br>Qatar vs Switzerland</div>
+                <div class="match match-group"><span class="match-time">5pm</span><br>Brazil vs Morocco</div>
+                <div class="match match-group"><span class="match-time">8pm</span><br>Haiti vs Scotland</div>
+            </div>
+            
+            <div class="day">
+                <div class="day-number">14</div>
+                <div class="match match-group"><span class="match-time">12pm</span><br>Germany vs Curacao</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Netherlands vs Japan</div>
+                <div class="match match-group"><span class="match-time">6pm</span><br>Ivory Coast vs Ecuador</div>
+                <div class="match match-group"><span class="match-time">9pm</span><br>UEFA Playoff B vs Tunisia</div>
+            </div>
+            <div class="day">
+                <div class="day-number">15</div>
+                <div class="match match-group"><span class="match-time">11am</span><br>Spain vs Cape Verde</div>
+                <div class="match match-group"><span class="match-time">2pm</span><br>Belgium vs Egypt</div>
+                <div class="match match-group"><span class="match-time">5pm</span><br>Saudi Arabia vs Uruguay</div>
+                <div class="match match-group"><span class="match-time">8pm</span><br>Iran vs New Zealand</div>
+            </div>
+            <div class="day">
+                <div class="day-number">16</div>
+                <div class="match match-group"><span class="match-time">2pm</span><br>France vs Senegal</div>
+                <div class="match match-group"><span class="match-time">5pm</span><br>Inter-P2 vs Norway</div>
+                <div class="match match-group"><span class="match-time">8pm</span><br>Argentina vs Algeria</div>
+                <div class="match match-group"><span class="match-time">11pm</span><br>Austria vs Jordan</div>
+            </div>
+            <div class="day">
+                <div class="day-number">17</div>
+                <div class="match match-group"><span class="match-time">12pm</span><br>Portugal vs Inter-P1</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>England vs Croatia</div>
+                <div class="match match-group"><span class="match-time">6pm</span><br>Ghana vs Panama</div>
+                <div class="match match-group"><span class="match-time">9pm</span><br>Uzbekistan vs Colombia</div>
+            </div>
+            
+            <div class="day">
+                <div class="day-number">18</div>
+                <div class="match match-group"><span class="match-time">11am</span><br>UEFA Playoff D vs South Africa</div>
+                <div class="match match-group"><span class="match-time">1am+</span><br>Mexico vs South Korea</div>
+                <div class="match match-group"><span class="match-time">2pm</span><br>Switzerland vs UEFA Playoff A</div>
+                <div class="match match-group"><span class="match-time">5pm</span><br>Canada vs Qatar</div>
+                <div class="match match-group"><span class="match-time">8pm</span><br>Scotland vs Morocco</div>
+                <div class="match match-group"><span class="match-time">11pm</span><br>Brazil vs Haiti</div>
+            </div>
+            <div class="day">
+                <div class="day-number">19</div>
+                <div class="match match-group"><span class="match-time">7pm</span><br>USA vs Australia</div>
+                <div class="match match-group"><span class="match-time">11pm</span><br>UEFA Playoff C vs Paraguay</div>
+            </div>
+            <div class="day">
+                <div class="day-number">20</div>
+                <div class="match match-group"><span class="match-time">12pm</span><br>Germany vs Ivory Coast</div>
+                <div class="match match-group"><span class="match-time">12pm</span><br>Netherlands vs UEFA Playoff B</div>
+                <div class="match match-group"><span class="match-time">5pm</span><br>Ecuador vs Curacao</div>
+                <div class="match match-group"><span class="match-time">11pm</span><br>Tunisia vs Japan</div>
+            </div>
+            <div class="day">
+                <div class="day-number">21</div>
+                <div class="match match-group"><span class="match-time">11am</span><br>Spain vs Saudi Arabia</div>
+                <div class="match match-group"><span class="match-time">12pm</span><br>Belgium vs Iran</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>New Zealand vs Egypt</div>
+                <div class="match match-group"><span class="match-time">8pm</span><br>Uruguay vs Cape Verde</div>
+            </div>
+            <div class="day">
+                <div class="day-number">22</div>
+                <div class="match match-group"><span class="match-time">12pm</span><br>France vs Inter-P2</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Norway vs Senegal</div>
+                <div class="match match-group"><span class="match-time">5pm</span><br>Argentina vs Austria</div>
+                <div class="match match-group"><span class="match-time">11pm</span><br>Jordan vs Algeria</div>
+            </div>
+            <div class="day">
+                <div class="day-number">23</div>
+                <div class="match match-group"><span class="match-time">12pm</span><br>Portugal vs Uzbekistan</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>England vs Ghana</div>
+                <div class="match match-group"><span class="match-time">6pm</span><br>Panama vs Croatia</div>
+                <div class="match match-group"><span class="match-time">9pm</span><br>Colombia vs Inter-P1</div>
+            </div>
+            
+            <div class="day">
+                <div class="day-number">24</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Switzerland vs Canada</div>
+                <div class="match match-group"><span class="match-time">4pm</span><br>Scotland vs Brazil</div>
+                <div class="match match-group"><span class="match-time">4pm</span><br>Morocco vs Haiti</div>
+                <div class="match match-group"><span class="match-time">5pm</span><br>UEFA Playoff A vs Qatar</div>
+            </div>
+            <div class="day">
+                <div class="day-number">25</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>UEFA Playoff C vs USA</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Paraguay vs Australia</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Ecuador vs Germany</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Curacao vs Ivory Coast</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Japan vs UEFA Playoff B</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Tunisia vs Netherlands</div>
+            </div>
+            <div class="day">
+                <div class="day-number">26</div>
+                <div class="match match-group"><span class="match-time">2pm</span><br>Norway vs France</div>
+                <div class="match match-group"><span class="match-time">2pm</span><br>Senegal vs Inter-P2</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>New Zealand vs Belgium</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Egypt vs Iran</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Cape Verde vs Saudi Arabia</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Uruguay vs Spain</div>
+            </div>
+            <div class="day">
+                <div class="day-number">27</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Jordan vs Argentina</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Algeria vs Austria</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Inter-P1 vs Uzbekistan</div>
+                <div class="match match-group"><span class="match-time">3pm</span><br>Colombia vs Portugal</div>
+                <div class="match match-group"><span class="match-time">6pm</span><br>Panama vs England</div>
+                <div class="match match-group"><span class="match-time">6pm</span><br>Croatia vs Ghana</div>
+            </div>
+            
+            <div class="day">
+                <div class="day-number">28</div>
+                <div class="match match-round32"><span class="match-time">2pm</span><br>Round of 32 - Match 73</div>
+            </div>
+            <div class="day">
+                <div class="day-number">29</div>
+                <div class="match match-round32"><span class="match-time">12pm</span><br>Round of 32 - Match 76</div>
+                <div class="match match-round32"><span class="match-time">3:30pm</span><br>Round of 32 - Match 74</div>
+            </div>
+            <div class="day">
+                <div class="day-number">30</div>
+                <div class="match match-round32"><span class="match-time">12pm</span><br>Round of 32 - Match 78</div>
+                <div class="match match-round32"><span class="match-time">8pm</span><br>Round of 32 - Match 77</div>
+                <div class="match match-round32"><span class="match-time">1am+</span><br>Round of 32 - Match 75</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="month">
+        <h2>July 2026</h2>
+        <div class="calendar-grid">
+            <div class="day-header">Sun</div>
+            <div class="day-header">Mon</div>
+            <div class="day-header">Tue</div>
+            <div class="day-header">Wed</div>
+            <div class="day-header">Thu</div>
+            <div class="day-header">Fri</div>
+            <div class="day-header">Sat</div>
+            
+            <div class="day">
+                <div class="day-number">29</div>
+                <div class="match match-round32"><span class="match-time">12pm</span><br>Round of 32 - Match 80</div>
+                <div class="match match-round32"><span class="match-time">3pm</span><br>Round of 32 - Match 82</div>
+            </div>
+            <div class="day">
+                <div class="day-number">30</div>
+                <div class="match match-round32"><span class="match-time">12pm</span><br>Round of 32 - Match 84</div>
+                <div class="match match-round32"><span class="match-time">7pm</span><br>Round of 32 - Match 86</div>
+            </div>
+            <div class="day">
+                <div class="day-number">1</div>
+                <div class="match match-round32"><span class="match-time">12pm</span><br>Round of 32 - Match 88</div>
+            </div>
+            <div class="day">
+                <div class="day-number">2</div>
+                <div class="match match-round32"><span class="match-time">12pm</span><br>Round of 32 - Match 85</div>
+            </div>
+            <div class="day">
+                <div class="day-number">3</div>
+                <div class="match match-round32"><span class="match-time">12pm</span><br>Round of 32 - Match 81</div>
+                <div class="match match-round32"><span class="match-time">3pm</span><br>Round of 32 - Match 83</div>
+            </div>
+            <div class="day">
+                <div class="day-number">4</div>
+                <div class="match match-round16"><span class="match-time">12pm</span><br>Round of 16 - Match 90</div>
+                <div class="match match-round16"><span class="match-time">3pm</span><br>Round of 16 - Match 89</div>
+            </div>
+            <div class="day">
+                <div class="day-number">5</div>
+                <div class="match match-round16"><span class="match-time">3pm</span><br>Round of 16 - Match 91</div>
+                <div class="match match-round16"><span class="match-time">8pm</span><br>Round of 16 - Match 92</div>
+            </div>
+            
+            <div class="day">
+                <div class="day-number">6</div>
+                <div class="match match-round16"><span class="match-time">2pm</span><br>Round of 16 - Match 93</div>
+                <div class="match match-round16"><span class="match-time">8pm</span><br>Round of 16 - Match 94</div>
+            </div>
+            <div class="day">
+                <div class="day-number">7</div>
+                <div class="match match-round16"><span class="match-time">11am</span><br>Round of 16 - Match 95</div>
+                <div class="match match-round16"><span class="match-time">3pm</span><br>Round of 16 - Match 96</div>
+            </div>
+            <div class="day">
+                <div class="day-number">8</div>
+            </div>
+            <div class="day">
+                <div class="day-number">9</div>
+                <div class="match match-quarter"><span class="match-time">3pm</span><br>Quarterfinal - Match 97</div>
+            </div>
+            <div class="day">
+                <div class="day-number">10</div>
+                <div class="match match-quarter"><span class="match-time">2pm</span><br>Quarterfinal - Match 98</div>
+            </div>
+            <div class="day">
+                <div class="day-number">11</div>
+                <div class="match match-quarter"><span class="match-time">4pm</span><br>Quarterfinal - Match 99</div>
+                <div class="match match-quarter"><span class="match-time">8pm</span><br>Quarterfinal - Match 100</div>
+            </div>
+            <div class="day">
+                <div class="day-number">12</div>
+            </div>
+            <div class="day">
+                <div class="day-number">13</div>
+            </div>
+            <div class="day">
+                <div class="day-number">14</div>
+                <div class="match match-semi"><span class="match-time">2pm</span><br>Semifinal - Match 101</div>
+            </div>
+            <div class="day">
+                <div class="day-number">15</div>
+                <div class="match match-semi"><span class="match-time">2pm</span><br>Semifinal - Match 102</div>
+            </div>
+            <div class="day">
+                <div class="day-number">16</div>
+            </div>
+            <div class="day">
+                <div class="day-number">17</div>
+            </div>
+            <div class="day">
+                <div class="day-number">18</div>
+                <div class="match match-semi"><span class="match-time">4pm</span><br>Third Place Match</div>
+            </div>
+            <div class="day">
+                <div class="day-number">19</div>
+                <div class="match match-final"><span class="match-time">2pm</span><br>🏆 FINAL - Match 104</div>
+            </div>
+            <div class="day"><div class="day-number">20</div></div>
+            <div class="day"><div class="day-number">21</div></div>
+            <div class="day"><div class="day-number">22</div></div>
+            <div class="day"><div class="day-number">23</div></div>
+            <div class="day"><div class="day-number">24</div></div>
+            <div class="day"><div class="day-number">25</div></div>
+            <div class="day"><div class="day-number">26</div></div>
+            <div class="day"><div class="day-number">27</div></div>
+            <div class="day"><div class="day-number">28</div></div>
+            <div class="day"><div class="day-number">29</div></div>
+            <div class="day"><div class="day-number">30</div></div>
+            <div class="day"><div class="day-number">31</div></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "computer-vision-expert": {
+      "version": "1.0.0",
+      "installedAt": 1772889913445
+    },
+    "vision-tagger": {
+      "version": "1.0.0",
+      "installedAt": 1772889934551
+    },
+    "peripheral-vision": {
+      "version": "1.0.0",
+      "installedAt": 1772889978033
+    }
+  }
+}

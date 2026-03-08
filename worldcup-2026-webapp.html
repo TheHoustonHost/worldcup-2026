@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏆 World Cup 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0f;
+            --card: #14141f;
+            --card-hover: #1e1e2e;
+            --text: #fff;
+            --text-dim: #888;
+            --accent: #4f46e5;
+            --accent-glow: rgba(79, 70, 229, 0.3);
+            --group-a: #ef4444;
+            --group-b: #eab308;
+            --group-c: #22c55e;
+            --group-d: #3b82f6;
+            --group-e: #a855f7;
+            --group-f: #ec4899;
+            --group-g: #14b8a6;
+            --group-h: #f97316;
+            --group-i: #0ea5e9;
+            --group-j: #d8b4fe;
+            --group-k: #facc15;
+            --group-l: #4ade80;
+            --knockout: #dc2626;
+            --final: #fbbf24;
+        }
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(180deg, rgba(79,70,229,0.15) 0%, transparent 100%);
+        }
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .header p { color: var(--text-dim); font-size: 1.1rem; }
+        
+        /* Filter Bar */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--card);
+            border: 1px solid #333;
+            border-radius: 25px;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        .filter-btn:hover { background: var(--card-hover); color: var(--text); }
+        .filter-btn.active { 
+            background: var(--accent); 
+            color: white; 
+            border-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        
+        /* Search */
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 30px;
+            padding: 0 20px;
+        }
+        .search {
+            width: 100%;
+            padding: 15px 25px;
+            background: var(--card);
+            border: 1px solid #333;
+            border-radius: 50px;
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .search:focus { border-color: var(--accent); }
+        .search::placeholder { color: var(--text-dim); }
+        
+        /* Stats Bar */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat-value { font-size: 2rem; font-weight: 700; color: var(--accent); }
+        .stat-label { color: var(--text-dim); font-size: 0.85rem; }
+        
+        /* Match Cards */
+        .matches {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 15px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .match-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #222;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .match-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+        .match-card.group-a::before { background: var(--group-a); }
+        .match-card.group-b::before { background: var(--group-b); }
+        .match-card.group-c::before { background: var(--group-c); }
+        .match-card.group-d::before { background: var(--group-d); }
+        .match-card.group-e::before { background: var(--group-e); }
+        .match-card.group-f::before { background: var(--group-f); }
+        .match-card.group-g::before { background: var(--group-g); }
+        .match-card.group-h::before { background: var(--group-h); }
+        .match-card.group-i::before { background: var(--group-i); }
+        .match-card.group-j::before { background: var(--group-j); }
+        .match-card.group-k::before { background: var(--group-k); }
+        .match-card.group-l::before { background: var(--group-l); }
+        .match-card.knockout::before { background: var(--knockout); }
+        .match-card.final::before { background: var(--final); }
+        
+        .match-card:hover {
+            transform: translateY(-3px);
+            border-color: #444;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .match-date {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .match-stage {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+        .match-stage.group-stage { background: rgba(79,70,229,0.2); color: #a5b4fc; }
+        .match-stage.knockout { background: rgba(220,38,38,0.2); color: #fca5a5; }
+        .match-stage.final { background: rgba(251,191,36,0.2); color: #fde047; }
+        
+        .match-teams {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .team {
+            font-weight: 600;
+            font-size: 1rem;
+            flex: 1;
+        }
+        .team:last-child { text-align: right; }
+        .vs { color: var(--text-dim); font-size: 0.8rem; margin: 0 10px; }
+        
+        .match-venue {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            padding-top: 12px;
+            border-top: 1px solid #222;
+        }
+        .match-venue svg { width: 14px; height: 14px; }
+        
+        /* Countdown */
+        .countdown {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(79,70,229,0.1) 0%, rgba(220,38,38,0.1) 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .countdown h3 { margin-bottom: 15px; color: var(--text-dim); }
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .countdown-item {
+            text-align: center;
+        }
+        .countdown-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+        .countdown-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+        
+        /* Add to Calendar Button */
+        .cta {
+            text-align: center;
+            margin-top: 40px;
+            padding-bottom: 40px;
+        }
+        .cta-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+        
+        /* Mobile */
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .matches { grid-template-columns: 1fr; }
+            .countdown-value { font-size: 1.8rem; }
+            .stats { gap: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏆 FIFA World Cup 2026</h1>
+        <p>June 11 - July 19 | USA • Canada • Mexico</p>
+    </div>
+    
+    <div class="countdown">
+        <h3>⏰ Tournament Starts In</h3>
+        <div class="countdown-timer">
+            <div class="countdown-item"><div class="countdown-value" id="days">--</div><div class="countdown-label">Days</div></div>
+            <div class="countdown-item"><div class="countdown-value" id="hours">--</div><div class="countdown-label">Hours</div></div>
+            <div class="countdown-item"><div class="countdown-value" id="mins">--</div><div class="countdown-label">Mins</div></div>
+            <div class="countdown-item"><div class="countdown-value" id="secs">--</div><div class="countdown-label">Secs</div></div>
+        </div>
+    </div>
+    
+    <div class="search-container">
+        <input type="text" class="search" placeholder="🔍 Search team, venue, or date..." id="search" onkeyup="filter()">
+    </div>
+    
+    <div class="filters" id="filters">
+        <button class="filter-btn active" data-filter="all">All Matches</button>
+        <button class="filter-btn" data-filter="group">Group Stage</button>
+        <button class="filter-btn" data-filter="knockout">Knockout</button>
+        <button class="filter-btn" data-filter="final">Final</button>
+        <button class="filter-btn" data-filter="usa">🇺🇸 USA Matches</button>
+        <button class="filter-btn" data-filter="mexico">🇲🇽 Mexico</button>
+        <button class="filter-btn" data-filter="canada">🇨🇦 Canada</button>
+    </div>
+    
+    <div class="stats">
+        <div class="stat"><div class="stat-value">48</div><div class="stat-label">Group Matches</div></div>
+        <div class="stat"><div class="stat-value">32</div><div class="stat-label">Knockout Matches</div></div>
+        <div class="stat"><div class="stat-value">16</div><div class="stat-label">Venues</div></div>
+        <div class="stat"><div class="stat-value">48</div><div class="stat-label">Teams</div></div>
+    </div>
+    
+    <div class="matches" id="matches"></div>
+    
+    <div class="cta">
+        <button class="cta-btn" onclick="downloadICS()">📅 Add to Calendar</button>
+    </div>
+    
+    <script>
+        const matches = [
+            { date: 'June 11', time: '2:00 PM', team1: 'Mexico', team2: 'South Africa', venue: 'Estadio Azteca', stage: 'group', group: 'A' },
+            { date: 'June 11', time: '9:00 PM', team1: 'South Korea', team2: 'UEFA Playoff D', venue: 'Estadio Akron', stage: 'group', group: 'A' },
+            { date: 'June 12', time: '2:00 PM', team1: 'Canada', team2: 'UEFA Playoff A', venue: 'Toronto Stadium', stage: 'group', group: 'B' },
+            { date: 'June 12', time: '9:00 PM', team1: 'USA', team2: 'Paraguay', venue: 'SoFi Stadium', stage: 'group', group: 'D' },
+            { date: 'June 13', time: '2:00 PM', team1: 'Qatar', team2: 'Switzerland', venue: 'Santa Clara Stadium', stage: 'group', group: 'B' },
+            { date: 'June 13', time: '5:00 PM', team1: 'Brazil', team2: 'Morocco', venue: 'MetLife Stadium', stage: 'group', group: 'C' },
+            { date: 'June 13', time: '8:00 PM', team1: 'Haiti', team2: 'Scotland', venue: 'Boston Stadium', stage: 'group', group: 'C' },
+            { date: 'June 14', time: '12:00 PM', team1: 'Germany', team2: 'Curacao', venue: 'Houston Stadium', stage: 'group', group: 'E' },
+            { date: 'June 14', time: '3:00 PM', team1: 'Netherlands', team2: 'Japan', venue: 'AT&T Stadium', stage: 'group', group: 'F' },
+            { date: 'June 14', time: '6:00 PM', team1: 'Ivory Coast', team2: 'Ecuador', venue: 'Philadelphia Stadium', stage: 'group', group: 'E' },
+            { date: 'June 15', time: '11:00 AM', team1: 'Spain', team2: 'Cape Verde', venue: 'Atlanta Stadium', stage: 'group', group: 'H' },
+            { date: 'June 15', time: '2:00 PM', team1: 'Belgium', team2: 'Egypt', venue: 'Seattle Stadium', stage: 'group', group: 'G' },
+            { date: 'June 15', time: '5:00 PM', team1: 'Saudi Arabia', team2: 'Uruguay', venue: 'Miami Stadium', stage: 'group', group: 'H' },
+            { date: 'June 16', time: '2:00 PM', team1: 'France', team2: 'Senegal', venue: 'MetLife Stadium', stage: 'group', group: 'I' },
+            { date: 'June 16', time: '8:00 PM', team1: 'Argentina', team2: 'Algeria', venue: 'Arrowhead Stadium', stage: 'group', group: 'J' },
+            { date: 'June 17', time: '12:00 PM', team1: 'Portugal', team2: 'Inter-P Playoff 1', venue: 'Houston Stadium', stage: 'group', group: 'K' },
+            { date: 'June 17', time: '3:00 PM', team1: 'England', team2: 'Croatia', venue: 'AT&T Stadium', stage: 'group', group: 'L' },
+            { date: 'June 17', time: '6:00 PM', team1: 'Ghana', team2: 'Panama', venue: 'Toronto Stadium', stage: 'group', group: 'L' },
+            { date: 'June 19', time: '7:00 PM', team1: 'USA', team2: 'Australia', venue: 'Seattle Stadium', stage: 'group', group: 'D' },
+            { date: 'June 24', time: '3:00 PM', team1: 'Switzerland', team2: 'Canada', venue: 'BC Place', stage: 'group', group: 'B' },
+            { date: 'June 24', time: '4:00 PM', team1: 'Scotland', team2: 'Brazil', venue: 'Miami Stadium', stage: 'group', group: 'C' },
+            { date: 'June 25', time: '3:00 PM', team1: 'Ecuador', team2: 'Germany', venue: 'MetLife Stadium', stage: 'group', group: 'E' },
+            { date: 'June 27', time: '6:00 PM', team1: 'Panama', team2: 'England', venue: 'MetLife Stadium', stage: 'group', group: 'L' },
+            { date: 'June 28', time: '2:00 PM', team1: 'Round of 32', team2: 'Match 73', venue: 'SoFi Stadium', stage: 'knockout' },
+            { date: 'July 4', time: '12:00 PM', team1: 'Round of 16', team2: 'Match 90', venue: 'Houston Stadium', stage: 'knockout' },
+            { date: 'July 9', time: '3:00 PM', team1: 'Quarterfinal', team2: 'Match 97', venue: 'Boston Stadium', stage: 'knockout' },
+            { date: 'July 14', time: '2:00 PM', team1: 'Semifinal', team2: 'Match 101', venue: 'AT&T Stadium', stage: 'knockout' },
+            { date: 'July 15', time: '2:00 PM', team1: 'Semifinal', team2: 'Match 102', venue: 'Atlanta Stadium', stage: 'knockout' },
+            { date: 'July 19', time: '2:00 PM', team1: '🏆 FINAL', team2: 'Championship', venue: 'MetLife Stadium', stage: 'final' }
+        ];
+        
+        let currentFilter = 'all';
+        
+        function render() {
+            const container = document.getElementById('matches');
+            const search = document.getElementById('search').value.toLowerCase();
+            container.innerHTML = '';
+            
+            matches.filter(m => {
+                if (currentFilter === 'all') return true;
+                if (currentFilter === 'group') return m.stage === 'group';
+                if (currentFilter === 'knockout') return m.stage === 'knockout';
+                if (currentFilter === 'final') return m.stage === 'final';
+                if (currentFilter === 'usa') return m.team1.includes('USA') || m.team2.includes('USA');
+                if (currentFilter === 'mexico') return m.team1.includes('Mexico') || m.team2.includes('Mexico');
+                if (currentFilter === 'canada') return m.team1.includes('Canada') || m.team2.includes('Canada');
+                return true;
+            }).filter(m => {
+                const text = `${m.date} ${m.team1} ${m.team2} ${m.venue} ${m.group || ''}`.toLowerCase();
+                return text.includes(search);
+            }).forEach(m => {
+                const card = document.createElement('div');
+                card.className = `match-card ${m.group ? 'group-' + m.group.toLowerCase() : m.stage}`;
+                let stageLabel = m.stage === 'group' ? `Group ${m.group}` : m.stage.charAt(0).toUpperCase() + m.stage.slice(1);
+                card.innerHTML = `
+                    <div class="match-date">${m.date} • ${m.time}</div>
+                    <span class="match-stage ${m.stage}">${stageLabel}</span>
+                    <div class="match-teams">
+                        <div class="team">${m.team1}</div>
+                        <div class="vs">vs</div>
+                        <div class="team">${m.team2}</div>
+                    </div>
+                    <div class="match-venue">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        ${m.venue}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        document.getElementById('filters').addEventListener('click', e => {
+            if (e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.filter;
+                render();
+            }
+        });
+        
+        document.getElementById('search').addEventListener('input', render);
+        
+        // Countdown
+        function updateCountdown() {
+            const start = new Date('2026-06-11T12:00:00-05:00');
+            const now = new Date();
+            const diff = start - now;
+            if (diff > 0) {
+                document.getElementById('days').textContent = Math.floor(diff / (1000*60*60*24));
+                document.getElementById('hours').textContent = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+                document.getElementById('mins').textContent = Math.floor((diff % (1000*60*60)) / (1000*60));
+                document.getElementById('secs').textContent = Math.floor((diff % (1000*60)) / 1000);
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        function downloadICS() {
+            alert('Download the ICS file from earlier to add to your calendar!');
+        }
+        
+        render();
+    </script>
+</body>
+</html>

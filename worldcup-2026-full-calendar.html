@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA World Cup 2026 - Full Schedule</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%); min-height: 100vh; padding: 20px; color: white; }
+        h1 { text-align: center; margin-bottom: 5px; font-size: 2.2em; background: linear-gradient(90deg, #ff6b6b, #ffd93d, #6bcb77, #4d96ff, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .subtitle { text-align: center; color: #888; margin-bottom: 20px; }
+        .tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 20px; justify-content: center; }
+        .tab-btn { padding: 12px 24px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #aaa; cursor: pointer; border-radius: 8px; font-size: 1em; transition: all 0.3s; }
+        .tab-btn:hover { background: rgba(255,255,255,0.2); color: white; }
+        .tab-btn.active { background: linear-gradient(135deg, #4d96ff, #a855f7); color: white; border-color: transparent; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .section-title { color: #fff; padding: 15px 20px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 20px 0 15px; font-size: 1.3em; }
+        .card { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; margin-bottom: 10px; }
+        .card:hover { transform: translateX(5px); background: rgba(255,255,255,0.08); }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { background: rgba(255,255,255,0.1); color: #aaa; font-weight: 600; }
+        tr:hover { background: rgba(255,255,255,0.05); }
+        .group-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.75em; font-weight: bold; margin-right: 8px; }
+        .bg-a { background: #ff6b6b; color: #000; } .bg-b { background: #ffd93d; color: #000; }
+        .bg-c { background: #6bcb77; color: #000; } .bg-d { background: #4d96ff; color: #fff; }
+        .bg-e { background: #a855f7; color: #fff; } .bg-f { background: #f472b6; color: #000; }
+        .bg-g { background: #34d399; color: #000; } .bg-h { background: #fb923c; color: #000; }
+        .bg-i { background: #60a5fa; color: #000; } .bg-j { background: #c084fc; color: #000; }
+        .bg-k { background: #facc15; color: #000; } .bg-l { background: #4ade80; color: #000; }
+        .date-header { background: rgba(77, 150, 255, 0.2); border-radius: 10px; padding: 15px; margin-bottom: 10px; margin-top: 20px; }
+        .date-header.round32 { background: rgba(107, 203, 119, 0.2); }
+        .date-header.round16 { background: rgba(255, 217, 61, 0.2); }
+        .date-header.quarter { background: rgba(255, 107, 107, 0.2); }
+        .date-header.semi { background: rgba(168, 85, 247, 0.2); }
+        .date-header.final { background: rgba(255, 215, 0, 0.3); }
+        .match-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+        .match-time { color: #ffd93d; font-weight: bold; min-width: 70px; }
+        .match-teams { flex: 1; text-align: center; }
+        .match-venue { color: #888; font-size: 0.85em; min-width: 150px; text-align: right; }
+        .vs { color: #666; margin: 0 10px; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .team-card { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; }
+        .team-name { font-weight: bold; font-size: 1.1em; margin-bottom: 10px; }
+        .team-match { padding: 8px; background: rgba(0,0,0,0.2); border-radius: 6px; margin-bottom: 6px; font-size: 0.85em; }
+        .venue-card { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 20px; margin-bottom: 15px; }
+        .venue-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .venue-name { font-size: 1.1em; font-weight: bold; }
+        .venue-city { color: #888; font-size: 0.9em; }
+        .group-section { margin-bottom: 30px; }
+        .group-header { padding: 15px; border-radius: 10px; margin-bottom: 15px; }
+        .search-box { width: 100%; max-width: 400px; padding: 12px 20px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 25px; color: white; font-size: 1em; margin-bottom: 20px; }
+        .search-box::placeholder { color: #666; }
+        .search-box:focus { outline: none; border-color: #4d96ff; }
+    </style>
+</head>
+<body>
+    <h1>🏆 FIFA World Cup 2026</h1>
+    <p class="subtitle">June 11 - July 19, 2026 | USA, Canada, Mexico</p>
+    <input type="text" class="search-box" placeholder="🔍 Search team, venue..." id="searchBox" onkeyup="filterContent()">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('by-date')">📅 By Date</button>
+        <button class="tab-btn" onclick="showTab('by-teams')">👥 By Teams</button>
+        <button class="tab-btn" onclick="showTab('by-groups')">🔢 By Groups</button>
+        <button class="tab-btn" onclick="showTab('by-venue')">📍 By Venue</button>
+    </div>
+
+    <!-- BY DATE -->
+    <div id="by-date" class="tab-content active">
+        <h2 class="section-title">📅 Full Schedule by Date (CT)</h2>
+        <div class="date-header"><h3>Thursday, June 11 - Opening Day</h3></div>
+        <div class="match-row"><span class="match-time">2:00 PM</span><span class="match-teams">Mexico vs South Africa</span><span class="match-venue">Estadio Azteca</span></div>
+        <div class="match-row"><span class="match-time">9:00 PM</span><span class="match-teams">South Korea vs UEFA Playoff D</span><span class="match-venue">Estadio Akron</span></div>
+        <div class="date-header"><h3>Friday, June 12</h3></div>
+        <div class="match-row"><span class="match-time">2:00 PM</span><span class="match-teams">Canada vs UEFA Playoff A</span><span class="match-venue">Toronto Stadium</span></div>
+        <div class="match-row"><span class="match-time">9:00 PM</span><span class="match-teams">USA vs Paraguay</span><span class="match-venue">SoFi Stadium</span></div>
+        <div class="match-row"><span class="match-time">11:00 PM</span><span class="match-teams">Australia vs UEFA Playoff C</span><span class="match-venue">BC Place</span></div>
+        <div class="date-header"><h3>Saturday, June 13</h3></div>
+        <div class="match-row"><span class="match-time">2:00 PM</span><span class="match-teams">Qatar vs Switzerland</span><span class="match-venue">Santa Clara Stadium</span></div>
+        <div class="match-row"><span class="match-time">5:00 PM</span><span class="match-teams">Brazil vs Morocco</span><span class="match-venue">MetLife Stadium</span></div>
+        <div class="match-row"><span class="match-time">8:00 PM</span><span class="match-teams">Haiti vs Scotland</span><span class="match-venue">Boston Stadium</span></div>
+        <div class="date-header"><h3>Sunday, June 14</h3></div>
+        <div class="match-row"><span class="match-time">12:00 PM</span><span class="match-teams">Germany vs Curacao</span><span class="match-venue">Houston Stadium</span></div>
+        <div class="match-row"><span class="match-time">3:00 PM</span><span class="match-teams">Netherlands vs Japan</span><span class="match-venue">AT&T Stadium</span></div>
+        <div class="match-row"><span class="match-time">6:00 PM</span><span class="match-teams">Ivory Coast vs Ecuador</span><span class="match-venue">Philadelphia Stadium</span></div>
+        <div class="match-row"><span class="match-time">9:00 PM</span><span class="match-teams">UEFA Playoff B vs Tunisia</span><span class="match-venue">Monterrey Stadium</span></div>
+        <div class="date-header"><h3>Monday, June 15</h3></div>
+        <div class="match-row"><span class="match-time">11:00 AM</span><span class="match-teams">Spain vs Cape Verde</span><span class="match-venue">Atlanta Stadium</span></div>
+        <div class="match-row"><span class="match-time">2:00 PM</span><span class="match-teams">Belgium vs Egypt</span><span class="match-venue">Seattle Stadium</span></div>
+        <div class="match-row"><span class="match-time">5:00 PM</span><span class="match-teams">Saudi Arabia vs Uruguay</span><span class="match-venue">Miami Stadium</span></div>
+        <div class="match-row"><span class="match-time">8:00 PM</span><span class="match-teams">Iran vs New Zealand</span><span class="match-venue">SoFi Stadium</span></div>
+        <div class="date-header"><h3>Tuesday, June 16</h3></div>
+        <div class="match-row"><span class="match-time">2:00 PM</span><span class="match-teams">France vs Senegal</span><span class="match-venue">MetLife Stadium</span></div>
+        <div class="match-row"><span class="match-time">5:00 PM</span><span class="match-teams">Inter-P2 vs Norway</span><span class="match-venue">Boston Stadium</span></div>
+        <div class="match-row"><span class="match-time">8:00 PM</span><span class="match-teams">Argentina vs Algeria</span><span class="match-venue">Arrowhead Stadium</span></div>
+        <div class="match-row"><span class="match-time">11:00 PM</span><span class="match-teams">Austria vs Jordan</span><span class="match-venue">Santa Clara Stadium</span></div>
+        <div class="date-header"><h3>Wednesday, June 17</h3></div>
+        <div class="match-row"><span class="match-time">12:00 PM</span><span class="match-teams">Portugal vs Inter-P1</span><span class="match-venue">Houston Stadium</span></div>
+        <div class="match-row"><span class="match-time">3:00 PM</span><span class="match-teams">England vs Croatia</span><span class="match-venue">AT&T Stadium</span></div>
+        <div class="match-row"><span class="match-time">6:00 PM</span><span class="match-teams">Ghana vs Panama</span><span class="match-venue">Toronto Stadium</span></div>
+        <div class="match-row"><span class="match-time">9:00 PM</span><span class="match-teams">Uzbekistan vs Colombia</span><span class="match-venue">Estadio Azteca</span></div>
+        <div class="date-header"><h3>Thursday, June 18</h3></div>
+        <div class="match-row"><span class="match-time">11:00 AM</span><span class="match-teams">UEFA Playoff D vs South Africa</span><span class="match-venue">Atlanta Stadium</span></div>
+        <div class="match-row"><span class="match-time">1:00 AM+</span><span class="match-teams">Mexico vs South Korea</span><span class="match-venue">Estadio Akron</span></div>
+        <div class="match-row"><span class="match-time">2:00 PM</span><span class="match-teams">Switzerland vs UEFA Playoff A</span><span class="match-venue">SoFi Stadium</span></div>
+        <div class="match-row"><span class="match-time">5:00 PM</span><span class="match-teams">Canada vs Qatar</span><span class="match-venue">BC Place</span></div>
+        <div class="date-header"><h3>Friday, June 19 - Monday, June 29</h3></div>
+        <div class="match-row"><span class="match-time">Multiple</span><span class="match-teams">Group Stage Continues...</span><span class="match-venue">All Venues</span></div>
+        <div class="date-header round32"><h3>Sunday, June 28 - Round of 32 Begins</h3></div>
+        <div class="match-row"><span class="match-time">2:00 PM</span><span class="match-teams">Match 73</span><span class="match-venue">SoFi Stadium</span></div>
+        <div class="date-header round16"><h3>July 4-7 - Round of 16</h3></div>
+        <div class="match-row"><span class="match-time">Multiple</span><span class="match-teams">8 Matches</span><span class="match-venue">Various</span></div>
+        <div class="date-header quarter"><h3>July 9-12 - Quarterfinals</h3></div>
+        <div class="match-row"><span class="match-time">Multiple</span><span class="match-teams">4 Matches</span><span class="match-venue">Various</span></div>
+        <div class="date-header semi"><h3>July 14-15 - Semifinals</h3></div>
+        <div class="match-row"><span class="match-time">2:00 PM</span><span class="match-teams">Match 101 & 102</span><span class="match-venue">Dallas & Atlanta</span></div>
+        <div class="date-header final"><h3>Sunday, July 19 - FINAL</h3></div>
+        <div class="match-row"><span class="match-time">2:00 PM</span><span class="match-teams">🏆 GRAND FINAL</span><span class="match-venue">MetLife Stadium</span></div>
+    </div>
+
+    <!-- BY TEAMS -->
+    <div id="by-teams" class="tab-content">
+        <h2 class="section-title">👥 All Teams & Their Matches</h2>
+        <div class="team-grid">
+            <div class="team-card" data-team="argentina"><div class="team-name">🇦🇷 Argentina</div><div class="team-match">Jun 16: Argentina vs Algeria</div><div class="team-match">Jun 22: Argentina vs Austria</div><div class="team-match">Jun 27: Jordan vs Argentina</div></div>
+            <div class="team-card" data-team="australia"><div class="team-name">🇦🇺 Australia</div><div class="team-match">Jun 12: Australia vs UEFA Playoff C</div><div class="team-match">Jun 19: USA vs Australia</div><div class="team-match">Jun 25: Paraguay vs Australia</div></div>
+            <div class="team-card" data-team="brazil"><div class="team-name">🇧🇷 Brazil</div><div class="team-match">Jun 13: Brazil vs Morocco</div><div class="team-match">Jun 18: Brazil vs Haiti</div><div class="team-match">Jun 24: Scotland vs Brazil</div></div>
+            <div class="team-card" data-team="canada"><div class="team-name">🇨🇦 Canada</div><div class="team-match">Jun 12: Canada vs UEFA Playoff A</div><div class="team-match">Jun 18: Canada vs Qatar</div><div class="team-match">Jun 24: Switzerland vs Canada</div></div>
+            <div class="team-card" data-team="croatia"><div class="team-name">🇭🇷 Croatia</div><div class="team-match">Jun 17: England vs Croatia</div><div class="team-match">Jun 23: Panama vs Croatia</div><div class="team-match">Jun 27: Croatia vs Ghana</div></div>
+            <div class="team-card" data-team="england"><div class="team-name">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</div><div class="team-match">Jun 17: England vs Croatia</div><div class="team-match">Jun 23: England vs Ghana</div><div class="team-match">Jun 27: Panama vs England</div></div>
+            <div class="team-card" data-team="france"><div class="team-name">🇫🇷 France</div><div class="team-match">Jun 16: France vs Senegal</div><div class="team-match">Jun 22: France vs Inter-P2</div><div class="team-match">Jun 26: Norway vs France</div></div>
+            <div class="team-card" data-team="germany"><div class="team-name">🇩🇪 Germany</div><div class="team-match">Jun 14: Germany vs Curacao</div><div class="team-match">Jun 20: Germany vs Ivory Coast</div><div class="team-match">Jun 25: Ecuador vs Germany</div></div>
+            <div class="team-card" data-team="japan"><div class="team-name">🇯🇵 Japan</div><div class="team-match">Jun 14: Netherlands vs Japan</div><div class="team-match">Jun 20: Tunisia vs Japan</div><div class="team-match">Jun 25: Japan vs UEFA Playoff B</div></div>
+            <div class="team-card" data-team="mexico"><div class="team-name">🇲🇽 Mexico</div><div class="team-match">Jun 11: Mexico vs South Africa</div><div class="team-match">Jun 18: Mexico vs South Korea</div><div class="team-match">Jun 24: UEFA Playoff D vs Mexico</div></div>
+            <div class="team-card" data-team="morocco"><div class="team-name">🇲🇦 Morocco</div><div class="team-match">Jun 13: Brazil vs Morocco</div><div class="team-match">Jun 18: Scotland vs Morocco</div><div class="team-match">Jun 24: Morocco vs Haiti</div></div>
+            <div class="team-card" data-team="netherlands"><div class="team-name">🇳🇱 Netherlands</div><div class="team-match">Jun 14: Netherlands vs Japan</div><div class="team-match">Jun 20: Netherlands vs UEFA Playoff B</div><div class="team-match">Jun 25: Tunisia vs Netherlands</div></div>
+            <div class="team-card" data-team="portugal"><div class="team-name">🇵🇹 Portugal</div><div class="team-match">Jun 17: Portugal vs Inter-P1</div><div class="team-match">Jun 23: Portugal vs Uzbekistan</div><div class="team-match">Jun 27: Colombia vs Portugal</div></div>
+            <div class="team-card" data-team="spain"><div class="team-name">🇪🇸 Spain</div><div class="team-match">Jun 15: Spain vs Cape Verde</div><div class="team-match">Jun 21: Spain vs Saudi Arabia</div><div class="team-match">Jun 26: Uruguay vs Spain</div></div>
+            <div class="team-card" data-team="usa"><div class="team-name">🇺🇸 USA</div><div class="team-match">Jun 12: USA vs Paraguay</div><div class="team-match">Jun 19: USA vs Australia</div><div class="team-match">Jun 25: UEFA Playoff C vs USA</div></div>
+            <div class="team-card" data-team="uruguay"><div class="team-name">🇺🇾 Uruguay</div><div class="team-match">Jun 15: Saudi Arabia vs Uruguay</div><div class="team-match">Jun 21: Uruguay vs Cape Verde</div><div class="team-match">Jun 26: Uruguay vs Spain</div></div>
+        </div>
+    </div>
+
+    <!-- BY GROUPS -->
+    <div id="by-groups" class="tab-content">
+        <h2 class="section-title">🔢 Groups A-L</h2>
+        <div class="group-section">
+            <div class="group-header bg-a" style="background: rgba(255,107,107,0.2);"><h3>Group A</h3></div>
+            <div class="card">Mexico, South Korea, South Africa, UEFA Playoff D</div>
+            <div class="match-row"><span class="match-time">Jun 11</span><span>Mexico vs South Africa</span><span>2pm</span></div>
+            <div class="match-row"><span class="match-time">Jun 11</span><span>South Korea vs UEFA Playoff D</span><span>9pm</span></div>
+            <div class="match-row"><span class="match-time">Jun 18</span><span>UEFA Playoff D vs South Africa</span><span>11am</span></div>
+            <div class="match-row"><span class="match-time">Jun 18</span><span>Mexico vs South Korea</span><span>1am+</span></div>
+            <div class="match-row"><span class="match-time">Jun 24</span><span>UEFA Playoff D vs Mexico</span><span>3pm</span></div>
+            <div class="match-row"><span class="match-time">Jun 24</span><span>South Africa vs South Korea</span><span>3pm</span></div>
+        </div>
+        <div class="group-section">
+            <div class="group-header bg-b" style="background: rgba(255,217,61,0.2);"><h3>Group B</h3></div>
+            <div class="card">Canada, Qatar, Switzerland, UEFA Playoff A</div>
+            <div class="match-row"><span class="match-time">Jun 12</span><span>Canada vs UEFA Playoff A</span><span>2pm</span></div>
+            <div class="match-row"><span class="match-time">Jun 13</span><span>Qatar vs Switzerland</span><span>2pm</span></div>
+        </div>
+        <div class="group-section">
+            <div class="group-header bg-c" style="background: rgba(107,203,119,0.2);"><h3>Group C</h3></div>
+            <div class="card">Brazil, Haiti, Morocco, Scotland</div>
+        </div>
+        <div class="group-section">
+            <div class="group-header bg-d" style="background: rgba(77,150,255,0.2);"><h3>Group D</h3></div>
+            <div class="card">USA, Australia, Paraguay, UEFA Playoff C</div>
+        </div>
+        <div class="group-section">
+            <div class="group-header bg-e" style="background: rgba(168,85,247,0.2);"><h3>Group E</h3></div>
+            <div class="card">Germany, Ivory Coast, Ecuador, Curacao</div>
+        </div>
+        <div class="group-section">
+            <div class="group-header bg-f" style="background: rgba(244,114,182,0.2);"><h3>Group F</h3></div>
+            <div class="card">Netherlands, Japan, Tunisia, UEFA Playoff B</div>
+        </div>
+        <div class="group-section">
+            <div class="group-header bg-g" style="background: rgba(52,211,153,0.2);"><h3>Group G</h3></div>
+            <div class="card">Iran, Belgium, Egypt, New Zealand</div>
+        </div>
+        <div class="group-section">
+            <div class="group-header bg-h" style="background: rgba(251,146,60,0.2);"><h3>Group H</h3></div>
+            <div class="card">Spain, Saudi Arabia, Uruguay, Cape Verde</div>
+        </div>
+        <div class="group-section">
+            <div class="group-header" style="background: rgba(96,165,250,0.2);"><h3>Group I</h3></div>
+            <div class="card">France, Senegal, Norway, Inter-P Playoff 2</div>
+        </div>
+        <div class="group-section">
+            <div class="group-header" style="background: rgba(192,132,252,0.2);"><h3>Group J</h3></div>
+            <div class="card">Argentina, Austria, Jordan, Algeria</div>
+        </div>
+        <div class="group-section">
+            <div class="group-header" style="background: rgba(250,204,21,0.2);"><h3>Group K</h3></div>
+            <div class="card">Portugal, Colombia, Uzbekistan, Inter-P Playoff 1</div>
+        </div>
+        <div class="group-section">
+            <div class="group-header" style="background: rgba(74,222,128,0.2);"><h3>Group L</h3></div>
+            <div class="card">England, Croatia, Ghana, Panama</div>
+        </div>
+    </div>
+
+    <!-- BY VENUE -->
+    <div id="by-venue" class="tab-content">
+        <h2 class="section-title">📍 All 16 Venues</h2>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">SoFi Stadium</div><div class="venue-city">Los Angeles, USA</div></div><span>7 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Estadio Azteca</div><div class="venue-city">Mexico City, Mexico</div></div><span>7 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">MetLife Stadium</div><div class="venue-city">New York/New Jersey, USA</div></div><span>8 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">AT&T Stadium</div><div class="venue-city">Dallas, USA</div></div><span>8 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Atlanta Stadium Stadium</div><div class="venue-city">Atlanta, USA</div></div><span>7 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Houston Stadium</div><div class="venue-city">Houston, USA</div></div><span>7 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Santa Clara Stadium</div><div class="venue-city">San Francisco, USA</div></div><span>6 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Boston Stadium</div><div class="venue-city">Boston, USA</div></div><span>6 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Seattle Stadium</div><div class="venue-city">Seattle, USA</div></div><span>6 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Miami Stadium</div><div class="venue-city">Miami, USA</div></div><span>6 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Arrowhead Stadium</div><div class="venue-city">Kansas City, USA</div></div><span>5 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Philadelphia Stadium</div><div class="venue-city">Philadelphia, USA</div></div><span>5 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">BC Place</div><div class="venue-city">Vancouver, Canada</div></div><span>6 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Toronto Stadium</div><div class="venue-city">Toronto, Canada</div></div><span>5 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Estadio Akron</div><div class="venue-city">Guadalajara, Mexico</div></div><span>5 Matches</span></div></div>
+        <div class="venue-card"><div class="venue-header"><div><div class="venue-name">Monterrey Stadium</div><div class="venue-city">Monterrey, Mexico</div></div><span>4 Matches</span></div></div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+        function filterContent() {
+            const search = document.getElementById('searchBox').value.toLowerCase();
+            document.querySelectorAll('.team-card, .venue-card, .match-row').forEach(el => {
+                el.style.display = el.textContent.toLowerCase().includes(search) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>

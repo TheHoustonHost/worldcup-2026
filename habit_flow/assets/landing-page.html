@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitFlow - AI-Powered Habit Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #111827; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Header */
+        header { background: #fff; padding: 20px 0; position: fixed; width: 100%; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 700; color: #6366F1; }
+        .logo span { color: #111827; }
+        .nav-links a { text-decoration: none; color: #6B7280; margin-left: 30px; transition: color 0.3s; }
+        .nav-links a:hover { color: #6366F1; }
+        .cta-button { background: #6366F1; color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: background 0.3s; }
+        .cta-button:hover { background: #4F46E5; }
+        
+        /* Hero */
+        hero { padding: 160px 0 100px; background: linear-gradient(135deg, #F9FAFB 0%, #EEF2FF 100%); text-align: center; }
+        .hero h1 { font-size: 56px; font-weight: 800; line-height: 1.2; margin-bottom: 24px; }
+        .hero h1 span { color: #6366F1; }
+        .hero p { font-size: 20px; color: #6B7280; max-width: 600px; margin: 0 auto 40px; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: center; }
+        .btn-primary { background: #6366F1; color: #fff; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 18px; }
+        .btn-secondary { background: #fff; color: #6366F1; padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 18px; border: 2px solid #6366F1; }
+        
+        /* Features */
+        features { padding: 100px 0; }
+        .section-title { text-align: center; font-size: 40px; font-weight: 700; margin-bottom: 16px; }
+        .section-subtitle { text-align: center; color: #6B7280; font-size: 18px; margin-bottom: 60px; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+        .feature-card { background: #fff; padding: 32px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .feature-icon { width: 56px; height: 56px; background: #EEF2FF; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 16px; }
+        .feature-card h3 { font-size: 20px; margin-bottom: 12px; }
+        .feature-card p { color: #6B7280; }
+        
+        /* AI Section */
+        ai-section { padding: 100px 0; background: #111827; color: #fff; }
+        .ai-content { display: flex; align-items: center; gap: 60px; }
+        .ai-text { flex: 1; }
+        .ai-text h2 { font-size: 40px; margin-bottom: 20px; }
+        .ai-text p { font-size: 18px; color: #9CA3AF; margin-bottom: 30px; }
+        .ai-features { list-style: none; }
+        .ai-features li { padding: 12px 0; border-bottom: 1px solid #374151; }
+        .ai-features li:before { content: "✓"; color: #10B981; margin-right: 12px; }
+        .ai-image { flex: 1; background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%); border-radius: 24px; height: 400px; display: flex; align-items: center; justify-content: center; font-size: 120px; }
+        
+        /* Pricing */
+        pricing { padding: 100px 0; background: #F9FAFB; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; max-width: 800px; margin: 0 auto; }
+        .pricing-card { background: #fff; padding: 40px; border-radius: 20px; text-align: center; }
+        .pricing-card.featured { border: 3px solid #6366F1; transform: scale(1.05); }
+        .pricing-card h3 { font-size: 24px; margin-bottom: 16px; }
+        .price { font-size: 48px; font-weight: 800; margin-bottom: 8px; }
+        .price span { font-size: 16px; font-weight: 400; color: #6B7280; }
+        .pricing-features { list-style: none; margin: 30px 0; text-align: left; }
+        .pricing-features li { padding: 8px 0; color: #6B7280; }
+        .pricing-features li:before { content: "✓"; color: #10B981; margin-right: 10px; }
+        
+        /* Footer */
+        footer { padding: 60px 0; background: #111827; color: #9CA3AF; text-align: center; }
+        footer p { margin-top: 20px; }
+        
+        @media (max-width: 768px) {
+            .features-grid, .ai-content, .pricing-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 36px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Habit<span>Flow</span></div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#ai">AI Coach</a>
+                    <a href="#pricing">Pricing</a>
+                </div>
+                <a href="#" class="cta-button">Download</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Build Better Habits<br>with <span>AI Coaching</span></h1>
+            <p>Track your habits, maintain streaks, and get personalized guidance from AI. The smartest habit tracker on the market.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary">Download Free</a>
+                <a href="#features" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Everything You Need</h2>
+            <p class="section-subtitle">Simple, powerful habit tracking that actually works</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Create Habits</h3>
+                    <p>Set up habits in seconds with custom frequencies and reminder times that fit your schedule.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <h3>Track Streaks</h3>
+                    <p>Watch your streaks grow and stay motivated with visual progress tracking.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>See Progress</h3>
+                    <p>Beautiful dashboards show your completion rates, best streaks, and trends.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Coach</h3>
+                    <p>Get personalized tips and motivation from AI that understands your habits.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Calendar View</h3>
+                    <p>Visualize your progress with an easy-to-read completion calendar.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Reminders</h3>
+                    <p>Never forget a habit with smart daily reminders at your preferred times.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ai-section" id="ai">
+        <div class="container">
+            <div class="ai-content">
+                <div class="ai-text">
+                    <h2>Meet Your AI Coach</h2>
+                    <p>Get personalized guidance powered by OpenAI. Your coach analyzes your habits and gives you actionable advice.</p>
+                    <ul class="ai-features">
+                        <li>Daily motivation tailored to your progress</li>
+                        <li>Specific tips for each habit</li>
+                        <li>Habit performance analysis</li>
+                        <li>Suggestions for new habits to try</li>
+                        <li>Encouragement when you're struggling</li>
+                    </ul>
+                </div>
+                <div class="ai-image">🤖</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Simple Pricing</h2>
+            <p class="section-subtitle">Start free, upgrade when you're ready</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">$0</div>
+                    <ul class="pricing-features">
+                        <li>Up to 3 habits</li>
+                        <li>Streak tracking</li>
+                        <li>Basic statistics</li>
+                        <li>Daily reminders</li>
+                        <li>AI Coach (limited)</li>
+                    </ul>
+                    <a href="#" class="btn-secondary" style="display:block;">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Premium</h3>
+                    <div class="price">$4.99<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited habits</li>
+                        <li>Full AI Coach access</li>
+                        <li>Advanced analytics</li>
+                        <li>Custom themes</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="#" class="btn-primary" style="display:block;">Start Free Trial</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="logo">Habit<span>Flow</span></div>
+            <p>© 2026 HabitFlow. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
