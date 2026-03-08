@@ -7,19 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-primary: #000000;
-            --bg-card: #1a1a1a;
-            --bg-card-hover: #252525;
-            --border: #2a2a2a;
-            --border-hover: #3a3a3a;
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1a1;
-            --text-tertiary: #6b6b6b;
-            --accent: #3b82f6;
-            --accent-glow: rgba(59, 130, 246, 0.15);
-            --gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-        }
+        :root { --bg-primary: #000000; --bg-card: #1a1a1a; --bg-card-hover: #252525; --border: #2a2a2a; --border-hover: #3a3a3a; --text-primary: #ffffff; --text-secondary: #a1a1a1; --text-tertiary: #6b6b6b; --accent: #3b82f6; --accent-glow: rgba(59, 130, 246, 0.15); --gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; }
         .app { max-width: 1400px; margin: 0 auto; padding: 20px; }
@@ -49,10 +37,6 @@
         .search-bar input { width: 100%; padding: 14px 20px 14px 48px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; color: var(--text-primary); font-size: 1rem; outline: none; }
         .search-bar input:focus { border-color: var(--accent); }
         .search-bar svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; color: var(--text-tertiary); }
-        .filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-        .filter-chip { padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; color: var(--text-secondary); font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
-        .filter-chip:hover { border-color: var(--border-hover); }
-        .filter-chip.active { background: var(--accent); border-color: var(--accent); color: white; }
         .section { display: none; }
         .section.active { display: block; }
         .section-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 20px; }
@@ -60,8 +44,7 @@
         .clickable-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; cursor: pointer; transition: all 0.3s; position: relative; }
         .clickable-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .card-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
-        .card-badge.group { background: var(--accent-glow); color: #60a5fa; }
+        .card-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; background: var(--accent-glow); color: #60a5fa; }
         .card-badge.knockout { background: rgba(239,68,68,0.2); color: #fca5a5; }
         .card-badge.final { background: rgba(251,191,36,0.2); color: #fde047; }
         .card-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
@@ -86,8 +69,7 @@
 </head>
 <body>
     <div class="app">
-        <header class="header">
-            <div class="logo"><div class="logo-icon">⚽</div><div class="logo-text">World Cup <span>2026</span></div></header>
+        <header class="header"><div class="logo"><div class="logo-icon">⚽</div><div class="logo-text">World Cup <span>2026</span></div></header>
         <div class="hero">
             <div class="stat-card featured"><div class="stat-value" id="countdown-days">--</div><div class="stat-label">Days Left</div></div>
             <div class="stat-card"><div class="stat-value">48</div><div class="stat-label">Group Matches</div></div>
@@ -109,38 +91,12 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input type="text" id="search" placeholder="Search..." onkeyup="filter()">
         </div>
-        <div class="filter-bar" id="matchFilters" style="display:none;">
-            <button class="filter-chip active" data-filter="all">All</button>
-            <button class="filter-chip" data-filter="group">Group Stage</button>
-            <button class="filter-chip" data-filter="knockout">Knockout</button>
-            <button class="filter-chip" data-filter="final">Final</button>
-        </div>
-        <section id="matches" class="section active">
-            <h2 class="section-title">📅 All Matches - Click for Details</h2>
-            <div class="cards-grid" id="matches-grid"></div>
-        </section>
-        <section id="teams" class="section">
-            <h2 class="section-title">👥 Teams - Click for Schedule</h2>
-            <div class="cards-grid" id="teams-grid"></div>
-        </section>
-        <section id="groups" class="section">
-            <h2 class="section-title">🔢 Groups - Click for Details</h2>
-            <div class="cards-grid" id="groups-grid"></div>
-        </section>
-        <section id="venues" class="section">
-            <h2 class="section-title">📍 Venues - Click for Matches</h2>
-            <div class="cards-grid" id="venues-grid"></div>
-        </section>
+        <section id="matches" class="section active"><h2 class="section-title">📅 All Matches - Click for Details</h2><div class="cards-grid" id="matches-grid"></div></section>
+        <section id="teams" class="section"><h2 class="section-title">👥 Teams - Click for Schedule</h2><div class="cards-grid" id="teams-grid"></div></section>
+        <section id="groups" class="section"><h2 class="section-title">🔢 Groups - Click for Details</h2><div class="cards-grid" id="groups-grid"></div></section>
+        <section id="venues" class="section"><h2 class="section-title">📍 Venues - Click for All Matches</h2><div class="cards-grid" id="venues-grid"></div></section>
     </div>
-    <div class="modal-overlay" id="modal">
-        <div class="modal">
-            <div class="modal-header">
-                <div class="modal-title" id="modal-title">Details</div>
-                <button class="modal-close" onclick="closeModal()">×</button>
-            </div>
-            <div id="modal-content"></div>
-        </div>
-    </div>
+    <div class="modal-overlay" id="modal"><div class="modal"><div class="modal-header"><div class="modal-title" id="modal-title">Details</div><button class="modal-close" onclick="closeModal()">×</button></div><div id="modal-content"></div></div></div>
     <script>
         const matches = [
             { id: 1, date: 'June 11', time: '2:00 PM CT', team1: 'Mexico', team2: 'South Africa', venue: 'Estadio Azteca', stage: 'group', group: 'A', stageName: 'Group A' },
@@ -158,33 +114,74 @@
             { id: 13, date: 'June 15', time: '5:00 PM CT', team1: 'Saudi Arabia', team2: 'Uruguay', venue: 'Miami Stadium', stage: 'group', group: 'H', stageName: 'Group H' },
             { id: 14, date: 'June 16', time: '2:00 PM CT', team1: 'France', team2: 'Senegal', venue: 'MetLife Stadium', stage: 'group', group: 'I', stageName: 'Group I' },
             { id: 15, date: 'June 16', time: '8:00 PM CT', team1: 'Argentina', team2: 'Algeria', venue: 'Arrowhead Stadium', stage: 'group', group: 'J', stageName: 'Group J' },
-            { id: 16, date: 'June 17', time: '12:00 PM CT', team1: 'Portugal', team2: 'Inter-P Playoff 1', venue: 'Houston Stadium', stage: 'group', group: 'K', stageName: 'Group K' },
+            { id: 16, date: 'June 17', time: '12:00 PM CT', team1: 'Portugal', team2: 'Inter-P1', venue: 'Houston Stadium', stage: 'group', group: 'K', stageName: 'Group K' },
             { id: 17, date: 'June 17', time: '3:00 PM CT', team1: 'England', team2: 'Croatia', venue: 'AT&T Stadium', stage: 'group', group: 'L', stageName: 'Group L' },
-            { id: 18, date: 'June 19', time: '7:00 PM CT', team1: 'USA', team2: 'Australia', venue: 'Seattle Stadium', stage: 'group', group: 'D', stageName: 'Group D' },
-            { id: 19, date: 'June 28', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'SoFi Stadium', stage: 'knockout', stageName: 'Round of 32' },
-            { id: 20, date: 'July 4', time: '12:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Houston Stadium', stage: 'knockout', stageName: 'Round of 16' },
-            { id: 21, date: 'July 9', time: '3:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Boston Stadium', stage: 'knockout', stageName: 'Quarterfinal' },
-            { id: 22, date: 'July 14', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'AT&T Stadium', stage: 'knockout', stageName: 'Semifinal' },
-            { id: 23, date: 'July 19', time: '2:00 PM CT', team1: '🏆 TBD', team2: 'TBD', venue: 'MetLife Stadium', stage: 'final', stageName: '🏆 FINAL' }
+            { id: 18, date: 'June 17', time: '6:00 PM CT', team1: 'Ghana', team2: 'Panama', venue: 'Toronto Stadium', stage: 'group', group: 'L', stageName: 'Group L' },
+            { id: 19, date: 'June 18', time: '11:00 AM CT', team1: 'UEFA Playoff D', team2: 'South Africa', venue: 'Atlanta Stadium', stage: 'group', group: 'A', stageName: 'Group A' },
+            { id: 20, date: 'June 18', time: '1:00 AM CT', team1: 'Mexico', team2: 'South Korea', venue: 'Estadio Akron', stage: 'group', group: 'A', stageName: 'Group A' },
+            { id: 21, date: 'June 18', time: '2:00 PM CT', team1: 'Switzerland', team2: 'UEFA Playoff A', venue: 'Santa Clara Stadium', stage: 'group', group: 'B', stageName: 'Group B' },
+            { id: 22, date: 'June 18', time: '5:00 PM CT', team1: 'Canada', team2: 'Qatar', venue: 'Toronto Stadium', stage: 'group', group: 'B', stageName: 'Group B' },
+            { id: 23, date: 'June 18', time: '8:00 PM CT', team1: 'Scotland', team2: 'Morocco', venue: 'Boston Stadium', stage: 'group', group: 'C', stageName: 'Group C' },
+            { id: 24, date: 'June 19', time: '7:00 PM CT', team1: 'USA', team2: 'Australia', venue: 'Seattle Stadium', stage: 'group', group: 'D', stageName: 'Group D' },
+            { id: 25, date: 'June 19', time: '11:00 PM CT', team1: 'UEFA Playoff C', team2: 'Paraguay', venue: 'Santa Clara Stadium', stage: 'group', group: 'D', stageName: 'Group D' },
+            { id: 26, date: 'June 20', time: '12:00 PM CT', team1: 'Germany', team2: 'Ivory Coast', venue: 'Houston Stadium', stage: 'group', group: 'E', stageName: 'Group E' },
+            { id: 27, date: 'June 20', time: '12:00 PM CT', team1: 'Netherlands', team2: 'UEFA Playoff B', venue: 'Houston Stadium', stage: 'group', group: 'F', stageName: 'Group F' },
+            { id: 28, date: 'June 20', time: '5:00 PM CT', team1: 'Ecuador', team2: 'Curacao', venue: 'Philadelphia Stadium', stage: 'group', group: 'E', stageName: 'Group E' },
+            { id: 29, date: 'June 21', time: '11:00 AM CT', team1: 'Spain', team2: 'Saudi Arabia', venue: 'Atlanta Stadium', stage: 'group', group: 'H', stageName: 'Group H' },
+            { id: 30, date: 'June 21', time: '12:00 PM CT', team1: 'Belgium', team2: 'Iran', venue: 'SoFi Stadium', stage: 'group', group: 'G', stageName: 'Group G' },
+            { id: 31, date: 'June 21', time: '3:00 PM CT', team1: 'New Zealand', team2: 'Egypt', venue: 'BC Place', stage: 'group', group: 'G', stageName: 'Group G' },
+            { id: 32, date: 'June 21', time: '8:00 PM CT', team1: 'Uruguay', team2: 'Cape Verde', venue: 'Miami Stadium', stage: 'group', group: 'H', stageName: 'Group H' },
+            { id: 33, date: 'June 22', time: '12:00 PM CT', team1: 'France', team2: 'Inter-P2', venue: 'Philadelphia Stadium', stage: 'group', group: 'I', stageName: 'Group I' },
+            { id: 34, date: 'June 22', time: '3:00 PM CT', team1: 'Norway', team2: 'Senegal', venue: 'MetLife Stadium', stage: 'group', group: 'I', stageName: 'Group I' },
+            { id: 35, date: 'June 22', time: '5:00 PM CT', team1: 'Argentina', team2: 'Austria', venue: 'AT&T Stadium', stage: 'group', group: 'J', stageName: 'Group J' },
+            { id: 36, date: 'June 23', time: '12:00 PM CT', team1: 'Portugal', team2: 'Uzbekistan', venue: 'Houston Stadium', stage: 'group', group: 'K', stageName: 'Group K' },
+            { id: 37, date: 'June 23', time: '3:00 PM CT', team1: 'England', team2: 'Ghana', venue: 'Boston Stadium', stage: 'group', group: 'L', stageName: 'Group L' },
+            { id: 38, date: 'June 23', time: '6:00 PM CT', team1: 'Panama', team2: 'Croatia', venue: 'Toronto Stadium', stage: 'group', group: 'L', stageName: 'Group L' },
+            { id: 39, date: 'June 24', time: '3:00 PM CT', team1: 'Switzerland', team2: 'Canada', venue: 'Toronto Stadium', stage: 'group', group: 'B', stageName: 'Group B' },
+            { id: 40, date: 'June 24', time: '3:00 PM CT', team1: 'UEFA Playoff D', team2: 'Mexico', venue: 'Estadio Azteca', stage: 'group', group: 'A', stageName: 'Group A' },
+            { id: 41, date: 'June 24', time: '4:00 PM CT', team1: 'Scotland', team2: 'Brazil', venue: 'Miami Stadium', stage: 'group', group: 'C', stageName: 'Group C' },
+            { id: 42, date: 'June 25', time: '3:00 PM CT', team1: 'Ecuador', team2: 'Germany', venue: 'MetLife Stadium', stage: 'group', group: 'E', stageName: 'Group E' },
+            { id: 43, date: 'June 25', time: '3:00 PM CT', team1: 'UEFA Playoff C', team2: 'USA', venue: 'SoFi Stadium', stage: 'group', group: 'D', stageName: 'Group D' },
+            { id: 44, date: 'June 26', time: '2:00 PM CT', team1: 'Norway', team2: 'France', venue: 'Boston Stadium', stage: 'group', group: 'I', stageName: 'Group I' },
+            { id: 45, date: 'June 26', time: '3:00 PM CT', team1: 'New Zealand', team2: 'Belgium', venue: 'BC Place', stage: 'group', group: 'G', stageName: 'Group G' },
+            { id: 46, date: 'June 27', time: '3:00 PM CT', team1: 'Jordan', team2: 'Argentina', venue: 'AT&T Stadium', stage: 'group', group: 'J', stageName: 'Group J' },
+            { id: 47, date: 'June 27', time: '6:00 PM CT', team1: 'Panama', team2: 'England', venue: 'MetLife Stadium', stage: 'group', group: 'L', stageName: 'Group L' },
+            { id: 48, date: 'June 28', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'SoFi Stadium', stage: 'knockout', stageName: 'Round of 32' },
+            { id: 49, date: 'June 29', time: '12:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Houston Stadium', stage: 'knockout', stageName: 'Round of 32' },
+            { id: 50, date: 'June 30', time: '12:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'AT&T Stadium', stage: 'knockout', stageName: 'Round of 32' },
+            { id: 51, date: 'July 1', time: '12:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Atlanta Stadium', stage: 'knockout', stageName: 'Round of 32' },
+            { id: 52, date: 'July 4', time: '12:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Houston Stadium', stage: 'knockout', stageName: 'Round of 16' },
+            { id: 53, date: 'July 5', time: '3:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'MetLife Stadium', stage: 'knockout', stageName: 'Round of 16' },
+            { id: 54, date: 'July 6', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'AT&T Stadium', stage: 'knockout', stageName: 'Round of 16' },
+            { id: 55, date: 'July 7', time: '11:00 AM CT', team1: 'TBD', team2: 'TBD', venue: 'Atlanta Stadium', stage: 'knockout', stageName: 'Round of 16' },
+            { id: 56, date: 'July 9', time: '3:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Boston Stadium', stage: 'knockout', stageName: 'Quarterfinal' },
+            { id: 57, date: 'July 10', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'SoFi Stadium', stage: 'knockout', stageName: 'Quarterfinal' },
+            { id: 58, date: 'July 11', time: '4:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Miami Stadium', stage: 'knockout', stageName: 'Quarterfinal' },
+            { id: 59, date: 'July 14', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'AT&T Stadium', stage: 'knockout', stageName: 'Semifinal' },
+            { id: 60, date: 'July 15', time: '2:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Atlanta Stadium', stage: 'knockout', stageName: 'Semifinal' },
+            { id: 61, date: 'July 18', time: '4:00 PM CT', team1: 'TBD', team2: 'TBD', venue: 'Miami Stadium', stage: 'knockout', stageName: 'Third Place' },
+            { id: 62, date: 'July 19', time: '2:00 PM CT', team1: '🏆 FINAL', team2: 'Championship', venue: 'MetLife Stadium', stage: 'final', stageName: '🏆 FINAL' }
         ];
+        
         const teams = [
             { name: 'Argentina', flag: '🇦🇷', group: 'J', matches: ['Jun 16: vs Algeria', 'Jun 22: vs Austria', 'Jun 27: vs Jordan'] },
-            { name: 'Australia', flag: '🇦🇺', group: 'D', matches: ['Jun 12: vs UEFA Playoff C', 'Jun 19: vs USA', 'Jun 25: vs Paraguay'] },
+            { name: 'Australia', flag: '🇦🇺', group: 'D', matches: ['Jun 12: vs Playoff C', 'Jun 19: vs USA', 'Jun 25: vs Paraguay'] },
             { name: 'Brazil', flag: '🇧🇷', group: 'C', matches: ['Jun 13: vs Morocco', 'Jun 18: vs Haiti', 'Jun 24: vs Scotland'] },
-            { name: 'Canada', flag: '🇨🇦', group: 'B', matches: ['Jun 12: vs UEFA Playoff A', 'Jun 18: vs Qatar', 'Jun 24: vs Switzerland'] },
+            { name: 'Canada', flag: '🇨🇦', group: 'B', matches: ['Jun 12: vs Playoff A', 'Jun 18: vs Qatar', 'Jun 24: vs Switzerland'] },
             { name: 'Croatia', flag: '🇭🇷', group: 'L', matches: ['Jun 17: vs England', 'Jun 23: vs Panama', 'Jun 27: vs Ghana'] },
             { name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', group: 'L', matches: ['Jun 17: vs Croatia', 'Jun 23: vs Ghana', 'Jun 27: vs Panama'] },
-            { name: 'France', flag: '🇫🇷', group: 'I', matches: ['Jun 16: vs Senegal', 'Jun 22: vs Inter-P2', 'Jun 26: vs Norway'] },
+            { name: 'France', flag: '🇫🇷', group: 'I', matches: ['Jun 16: vs Senegal', 'Jun 22: vs Playoff 2', 'Jun 26: vs Norway'] },
             { name: 'Germany', flag: '🇩🇪', group: 'E', matches: ['Jun 14: vs Curacao', 'Jun 20: vs Ivory Coast', 'Jun 25: vs Ecuador'] },
-            { name: 'Japan', flag: '🇯🇵', group: 'F', matches: ['Jun 14: vs Netherlands', 'Jun 20: vs Tunisia', 'Jun 25: vs UEFA Playoff B'] },
-            { name: 'Mexico', flag: '🇲🇽', group: 'A', matches: ['Jun 11: vs South Africa', 'Jun 18: vs South Korea', 'Jun 24: vs UEFA Playoff D'] },
+            { name: 'Japan', flag: '🇯🇵', group: 'F', matches: ['Jun 14: vs Netherlands', 'Jun 20: vs Tunisia', 'Jun 25: vs Playoff B'] },
+            { name: 'Mexico', flag: '🇲🇽', group: 'A', matches: ['Jun 11: vs South Africa', 'Jun 18: vs South Korea', 'Jun 24: vs Playoff D'] },
             { name: 'Morocco', flag: '🇲🇦', group: 'C', matches: ['Jun 13: vs Brazil', 'Jun 18: vs Scotland', 'Jun 24: vs Haiti'] },
-            { name: 'Netherlands', flag: '🇳🇱', group: 'F', matches: ['Jun 14: vs Japan', 'Jun 20: vs UEFA Playoff B', 'Jun 25: vs Tunisia'] },
-            { name: 'Portugal', flag: '🇵🇹', group: 'K', matches: ['Jun 17: vs Inter-P1', 'Jun 23: vs Uzbekistan', 'Jun 27: vs Colombia'] },
+            { name: 'Netherlands', flag: '🇳🇱', group: 'F', matches: ['Jun 14: vs Japan', 'Jun 20: vs Playoff B', 'Jun 25: vs Tunisia'] },
+            { name: 'Portugal', flag: '🇵🇹', group: 'K', matches: ['Jun 17: vs Playoff 1', 'Jun 23: vs Uzbekistan', 'Jun 27: vs Colombia'] },
             { name: 'Spain', flag: '🇪🇸', group: 'H', matches: ['Jun 15: vs Cape Verde', 'Jun 21: vs Saudi Arabia', 'Jun 26: vs Uruguay'] },
-            { name: 'USA', flag: '🇺🇸', group: 'D', matches: ['Jun 12: vs Paraguay', 'Jun 19: vs Australia', 'Jun 25: vs UEFA Playoff C'] },
+            { name: 'USA', flag: '🇺🇸', group: 'D', matches: ['Jun 12: vs Paraguay', 'Jun 19: vs Australia', 'Jun 25: vs Playoff C'] },
             { name: 'Uruguay', flag: '🇺🇾', group: 'H', matches: ['Jun 15: vs Saudi Arabia', 'Jun 21: vs Cape Verde', 'Jun 26: vs Spain'] }
         ];
+        
         const groups = [
             { letter: 'A', teams: ['Mexico', 'South Korea', 'South Africa', 'UEFA Playoff D'] },
             { letter: 'B', teams: ['Canada', 'Qatar', 'Switzerland', 'UEFA Playoff A'] },
@@ -199,188 +196,11 @@
             { letter: 'K', teams: ['Portugal', 'Colombia', 'Uzbekistan', 'Inter-P Playoff 1'] },
             { letter: 'L', teams: ['England', 'Croatia', 'Ghana', 'Panama'] }
         ];
+        
         const venues = [
-            { name: 'SoFi Stadium', city: 'Los Angeles', country: '🇺🇸 USA', matches: 8 },
-            { name: 'MetLife Stadium', city: 'New York', country: '🇺🇸 USA', matches: 8 },
-            { name: 'AT&T Stadium', city: 'Dallas', country: '🇺🇸 USA', matches: 8 },
-            { name: 'Estadio Azteca', city: 'Mexico City', country: '🇲🇽 Mexico', matches: 7 },
-            { name: 'Houston Stadium', city: 'Houston', country: '🇺🇸 USA', matches: 7 },
-            { name: 'Atlanta Stadium', city: 'Atlanta', country: '🇺🇸 USA', matches: 7 },
-            { name: 'Santa Clara Stadium', city: 'San Francisco', country: '🇺🇸 USA', matches: 6 },
-            { name: 'Boston Stadium', city: 'Boston', country: '🇺🇸 USA', matches: 6 },
-            { name: 'Seattle Stadium', city: 'Seattle', country: '🇺🇸 USA', matches: 6 },
-            { name: 'Miami Stadium', city: 'Miami', country: '🇺🇸 USA', matches: 6 },
-            { name: 'BC Place', city: 'Vancouver', country: '🇨🇦 Canada', matches: 6 },
-            { name: 'Toronto Stadium', city: 'Toronto', country: '🇨🇦 Canada', matches: 5 },
-            { name: 'Arrowhead Stadium', city: 'Kansas City', country: '🇺🇸 USA', matches: 5 },
-            { name: 'Philadelphia Stadium', city: 'Philadelphia', country: '🇺🇸 USA', matches: 5 },
-            { name: 'Estadio Akron', city: 'Guadalajara', country: '🇲🇽 Mexico', matches: 5 },
-            { name: 'Monterrey Stadium', city: 'Monterrey', country: '🇲🇽 Mexico', matches: 4 }
-        ];
-        let currentFilter = 'all';
-
-        function renderMatches() {
-            const grid = document.getElementById('matches-grid');
-            const search = document.getElementById('search').value.toLowerCase();
-            const filtered = matches.filter(m => {
-                const s = `${m.date} ${m.team1} ${m.team2} ${m.venue}`.toLowerCase();
-                return s.includes(search);
-            });
-            grid.innerHTML = filtered.map(m => `
-                <div class="clickable-card" onclick="showMatchDetails('${m.stage}', '${m.group || m.stage}')">
-                    <div class="card-header">
-                        <span class="card-badge ${m.stage}">${m.stageName}</span>
-                        <span style="color:var(--text-secondary)">${m.date}</span>
-                    </div>
-                    <div class="card-title">${m.team1} vs ${m.team2}</div>
-                    <div class="card-subtitle">📍 ${m.venue} • ${m.time}</div>
-                </div>
-            `).join('');
-        }
-        function renderTeams() {
-            const grid = document.getElementById('teams-grid');
-            const search = document.getElementById('search').value.toLowerCase();
-            grid.innerHTML = teams.filter(t => `${t.name} ${t.group}`.toLowerCase().includes(search)).map(t => `
-                <div class="clickable-card" onclick="showTeamDetails('${t.name}')">
-                    <div class="card-header"><span class="card-badge group">Group ${t.group}</span></div>
-                    <div class="card-title">${t.flag} ${t.name}</div>
-                    <div class="card-subtitle">${t.matches.length} matches</div>
-                </div>
-            `).join('');
-        }
-        function renderGroups() {
-            const grid = document.getElementById('groups-grid');
-            const search = document.getElementById('search').value.toLowerCase();
-            grid.innerHTML = groups.filter(g => `${g.letter} ${g.teams.join(' ')}`.toLowerCase().includes(search)).map(g => `
-                <div class="clickable-card" onclick="showGroupDetails('${g.letter}')">
-                    <div class="card-header"><span class="card-badge group">Group</span></div>
-                    <div class="card-title">Group ${g.letter}</div>
-="card-subtitle                    <div class">${g.teams.length} teams</div>
-                </div>
-            `).join('');
-        }
-        function renderVenues() {
-            const grid = document.getElementById('venues-grid');
-            const search = document.getElementById('search').value.toLowerCase();
-            grid.innerHTML = venues.filter(v => `${v.name} ${v.city}`.toLowerCase().includes(search)).map(v => `
-                <div class="clickable-card" onclick="showVenueDetails('${v.name}')">
-                    <div class="card-header"><span class="card-badge group">${v.matches} matches</span></div>
-                    <div class="card-title">${v.name}</div>
-                    <div class="card-subtitle">${v.city} ${v.country}</div>
-                </div>
-            `).join('');
-        }
-        function showMatchDetails(stage, filter) {
-            let title = 'All Matches';
-            if (stage === 'group' && filter) title = `Group ${filter} Matches`;
-            else if (stage === 'knockout') title = 'Knockout Stage';
-            else if (stage === 'final') title = 'Final';
-            
-            const filtered = stage === 'group' ? matches.filter(m => m.group === filter) : 
-                           stage === 'knockout' ? matches.filter(m => m.stage === 'knockout') :
-                           matches.filter(m => m.stage === stage);
-            
-            document.getElementById('modal-title').textContent = title;
-            document.getElementById('modal-content').innerHTML = `
-                <div class="modal-matches">
-                    ${filtered.map(m => `
-                        <div class="modal-match">
-                            <div class="modal-match-teams">
-                                <span class="modal-match-team">${m.team1}</span>
-                                <span class="modal-match-vs">vs</span>
-                                <span class="modal-match-team">${m.team2}</span>
-                            </div>
-                            <div class="modal-match-info">${m.date}<br>${m.time}<br>${m.venue}</div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            document.getElementById('modal').classList.add('active');
-        }
-        function showTeamDetails(teamName) {
-            const team = teams.find(t => t.name === teamName);
-            document.getElementById('modal-title').textContent = `${team.flag} ${team.name}`;
-            document.getElementById('modal-content').innerHTML = `
-                <div style="margin-bottom:15px;"><span class="card-badge group">Group ${team.group}</span></div>
-                <div class="modal-matches">
-                    ${team.matches.map(m => `<div class="modal-match"><span>${m}</span></div>`).join('')}
-                </div>
-            `;
-            document.getElementById('modal').classList.add('active');
-        }
-        function showGroupDetails(letter) {
-            const group = groups.find(g => g.letter === letter);
-            document.getElementById('modal-title').textContent = `Group ${letter}`;
-            document.getElementById('modal-content').innerHTML = `
-                <div class="modal-teams-grid">
-                    ${group.teams.map(t => {
-                        const team = teams.find(x => x.name === t);
-                        return team ? `<div class="modal-team"><div class="modal-team-name">${team.flag} ${t}</div><div class="modal-team-matches">3 matches</div></div>` : `<div class="modal-team"><div class="modal-team-name">${t}</div><div class="modal-team-matches">TBD</div></div>`;
-                    }).join('')}
-                </div>
-            `;
-            document.getElementById('modal').classList.add('active');
-        }
-        function showVenueDetails(venueName) {
-            const venue = venues.find(v => v.name === venueName);
-            const venueMatches = matches.filter(m => m.venue === venueName);
-            document.getElementById('modal-title').textContent = venue.name;
-            document.getElementById('modal-content').innerHTML = `
-                <div style="margin-bottom:15px;color:var(--text-secondary)">${venue.city} ${venue.country}</div>
-                <div class="modal-matches">
-                    ${venueMatches.map(m => `
-                        <div class="modal-match">
-                            <div class="modal-match-teams">
-                                <span class="modal-match-team">${m.team1}</span>
-                                <span class="modal-match-vs">vs</span>
-                                <span class="modal-match-team">${m.team2}</span>
-                            </div>
-                            <div class="modal-match-info">${m.date}<br>${m.time}</div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            document.getElementById('modal').classList.add('active');
-        }
-        function closeModal() { document.getElementById('modal').classList.remove('active'); }
-        document.getElementById('modal').addEventListener('click', (e) => { if(e.target.id === 'modal') closeModal(); });
-        
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(btn.dataset.section).classList.add('active');
-                document.getElementById('matchFilters').style.display = btn.dataset.section === 'matches' ? 'flex' : 'none';
-            });
-        });
-        document.querySelectorAll('.filter-chip').forEach(chip => {
-            chip.addEventListener('click', () => {
-                document.querySelectorAll('.filter-chip').forEach(c => c.class                .remove('active'));
-                currentFilter = chip.dataset.filter;
-                document.querySelectorAll('.filter-chip').forEach(c => c.classList.add('active'));
-                renderMatches();
-            });
-        });
-        
-        function filter() { renderMatches(); renderTeams(); renderGroups(); renderVenues(); }
-        
-        function updateCountdown() {
-            const start = new Date('2026-06-11T12:00:00-05:00');
-            const now = new Date();
-            const diff = start - now;
-            if (diff > 0) {
-                document.getElementById('days').textContent = Math.floor(diff / (1000*60*60*24));
-                document.getElementById('hours').textContent = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-                document.getElementById('minutes').textContent = Math.floor((diff % (1000*60*60)) / (1000*60));
-                document.getElementById('seconds').textContent = Math.floor((diff % (1000*60)) / 1000);
-                document.getElementById('countdown-days').textContent = Math.floor(diff / (1000*60*60*24));
-            }
-        }
-        
-        renderMatches(); renderTeams(); renderGroups(); renderVenues();
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-    </script>
-</body>
-</html>
+            { name: 'SoFi Stadium', city: 'Los Angeles', country: '🇺🇸 USA', matches: 7 },
+            { name: 'MetLife Stadium', city: 'New York', country: '🇺🇸 USA', matches: 7 },
+            { name: 'AT&T Stadium', city: 'Dallas', country: '🇺🇸 USA', matches: 7 },
+            { name: 'Estadio Azteca', city: 'Mexico City', country: '🇲🇽 Mexico', matches: 5 },
+            { name: 'Houston Stadium', city: 'Houston', country: '🇺🇸 USA', matches: 6 },
+            { name: 'Atlanta Stadium', city: 'Atlanta', country: '🇺🇸 USA', matches
